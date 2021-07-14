@@ -43,28 +43,28 @@ data "aws_iam_policy_document" "emr_capacity_reservations" {
   }
 }
 
-resource "aws_iam_role" "aws_emr_template_repository_emr_service" {
-  name               = "aws_emr_template_repository_emr_service"
+resource "aws_iam_role" "aws_uc_feature_infrastructure_emr_service" {
+  name               = "aws_uc_feature_infrastructure_emr_service"
   assume_role_policy = data.aws_iam_policy_document.emr_assume_role.json
   tags = {
-    Name = "aws_emr_template_repository_emr_service"
+    Name = "aws_uc_feature_infrastructure_emr_service"
   }
 }
 
 # This is new and should replace the deprecated one but doesn't work correctly
 # resource "aws_iam_role_policy_attachment" "emr_attachment_service" {
-#   role       = aws_iam_role.aws_emr_template_repository_emr_service.name
+#   role       = aws_iam_role.aws_uc_feature_infrastructure_emr_service.name
 #   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonEMRServicePolicy_v2"
 # }
 
 # This is deprecated and needs a ticket to remove it
 resource "aws_iam_role_policy_attachment" "emr_attachment_old" {
-  role       = aws_iam_role.aws_emr_template_repository_emr_service.name
+  role       = aws_iam_role.aws_uc_feature_infrastructure_emr_service.name
   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonElasticMapReduceRole"
 }
 
 resource "aws_iam_policy" "emr_capacity_reservations" {
-  name        = "aws_emr_template_repositoryCapacityReservations"
+  name        = "aws_uc_feature_infrastructureCapacityReservations"
   description = "Allow usage of capacity reservations"
   policy      = data.aws_iam_policy_document.emr_capacity_reservations.json
   tags = {
@@ -73,11 +73,11 @@ resource "aws_iam_policy" "emr_capacity_reservations" {
 }
 
 resource "aws_iam_role_policy_attachment" "emr_capacity_reservations" {
-  role       = aws_iam_role.aws_emr_template_repository_emr_service.name
+  role       = aws_iam_role.aws_uc_feature_infrastructure_emr_service.name
   policy_arn = aws_iam_policy.emr_capacity_reservations.arn
 }
 
-resource "aws_iam_role_policy_attachment" "aws_emr_template_repository_emr_service_ebs_cmk" {
-  role       = aws_iam_role.aws_emr_template_repository_emr_service.name
-  policy_arn = aws_iam_policy.aws_emr_template_repository_ebs_cmk_encrypt.arn
+resource "aws_iam_role_policy_attachment" "aws_uc_feature_infrastructure_emr_service_ebs_cmk" {
+  role       = aws_iam_role.aws_uc_feature_infrastructure_emr_service.name
+  policy_arn = aws_iam_policy.aws_uc_feature_infrastructure_ebs_cmk_encrypt.arn
 }

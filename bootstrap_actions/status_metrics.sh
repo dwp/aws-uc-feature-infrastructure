@@ -10,7 +10,7 @@
     source /opt/emr/logging.sh
 
     function log_wrapper_message() {
-        log_aws_emr_template_repository_message "$${1}" "status_metrics.sh" "$${PID}" "$${@:2}" "Running as: ,$USER"
+        log_aws_uc_feature_infrastructure_message "$${1}" "status_metrics.sh" "$${PID}" "$${@:2}" "Running as: ,$USER"
     }
 
   log_wrapper_message "Start running status_metrics.sh Shell"
@@ -49,8 +49,8 @@
   push_metric() {
     log_wrapper_message "Sending to push gateway with value $1"
 
-    cat << EOF | curl --data-binary @- "http://${aws_emr_template_repository_pushgateway_hostname}:9091/metrics/job/aws_emr_template_repository"
-                aws_emr_template_repository_status{snapshot_type="$SNAPSHOT_TYPE", export_date="$EXPORT_DATE", cluster_id="$CLUSTER_ID", component="AWS_EMR_TEMPLATE_REPOSITORY", correlation_id="$CORRELATION_ID"} $1
+    cat << EOF | curl --data-binary @- "http://${aws_uc_feature_infrastructure_pushgateway_hostname}:9091/metrics/job/aws_uc_feature_infrastructure"
+                aws_uc_feature_infrastructure_status{snapshot_type="$SNAPSHOT_TYPE", export_date="$EXPORT_DATE", cluster_id="$CLUSTER_ID", component="aws_uc_feature_infrastructure", correlation_id="$CORRELATION_ID"} $1
 EOF
   }
 
@@ -102,4 +102,4 @@ EOF
   #kick off loop to process all step files
   check_step_dir
 
-) >> /var/log/aws_emr_template_repository/status_metrics_sh.log 2>&1
+) >> /var/log/aws_uc_feature_infrastructure/status_metrics_sh.log 2>&1

@@ -17,7 +17,7 @@ locals {
 
   overridden_tags = {
     Role         = "emr_template_repository"
-    Owner        = "aws-emr-template-repository"
+    Owner        = "aws-uc-feature-infrastructure"
     Persistence  = local.persistence_tag_value[local.environment]
     AutoShutdown = local.auto_shutdown_tag_value[local.environment]
   }
@@ -27,7 +27,7 @@ locals {
     for-use-with-amazon-emr-managed-policies = "true"
   }
 
-  emr_cluster_name       = "aws-emr-template-repository"
+  emr_cluster_name       = "aws-uc-feature-infrastructure"
   env_certificate_bucket = "dw-${local.environment}-public-certificates"
   mgt_certificate_bucket = "dw-${local.management_account[local.environment]}-public-certificates"
   dks_endpoint           = data.terraform_remote_state.crypto.outputs.dks_endpoint[local.environment]
@@ -58,7 +58,7 @@ locals {
     production  = "dataworks.dwp.gov.uk"
   }
 
-  aws_emr_template_repository_log_level = {
+  aws_uc_feature_infrastructure_log_level = {
     development = "DEBUG"
     qa          = "DEBUG"
     integration = "DEBUG"
@@ -66,7 +66,7 @@ locals {
     production  = "INFO"
   }
 
-  aws_emr_template_repository_version = {
+  aws_uc_feature_infrastructure_version = {
     development = "0.0.1"
     qa          = "0.0.1"
     integration = "0.0.1"
@@ -74,7 +74,7 @@ locals {
     production  = "0.0.1"
   }
 
-  aws_emr_template_repository_alerts = {
+  aws_uc_feature_infrastructure_alerts = {
     development = false
     qa          = false
     integration = false
@@ -101,7 +101,7 @@ locals {
         LocalDiskEncryptionConfiguration = {
           EnableEbsEncryption       = true
           EncryptionKeyProviderType = "AwsKms"
-          AwsKmsKey                 = aws_kms_key.aws_emr_template_repository_ebs_cmk.arn
+          AwsKmsKey                 = aws_kms_key.aws_uc_feature_infrastructure_ebs_cmk.arn
         }
       }
     }
@@ -123,13 +123,13 @@ locals {
     production  = "TERMINATE_CLUSTER"
   }
 
-  cw_agent_namespace                   = "/app/aws_emr_template_repository"
-  cw_agent_log_group_name              = "/app/aws_emr_template_repository"
-  cw_agent_bootstrap_loggrp_name       = "/app/aws_emr_template_repository/bootstrap_actions"
-  cw_agent_steps_loggrp_name           = "/app/aws_emr_template_repository/step_logs"
+  cw_agent_namespace                   = "/app/aws_uc_feature_infrastructure"
+  cw_agent_log_group_name              = "/app/aws_uc_feature_infrastructure"
+  cw_agent_bootstrap_loggrp_name       = "/app/aws_uc_feature_infrastructure/bootstrap_actions"
+  cw_agent_steps_loggrp_name           = "/app/aws_uc_feature_infrastructure/step_logs"
   cw_agent_metrics_collection_interval = 60
 
-  s3_log_prefix = "emr/aws_emr_template_repository"
+  s3_log_prefix = "emr/aws_uc_feature_infrastructure"
 
   dynamodb_final_step = "temp"
 
@@ -148,9 +148,9 @@ locals {
 
   emr_subnet_non_capacity_reserved_environments = "eu-west-2c"
 
-  aws_emr_template_repository_pushgateway_hostname = "${aws_service_discovery_service.aws_emr_template_repository_services.name}.${aws_service_discovery_private_dns_namespace.aws_emr_template_repository_services.name}"
+  aws_uc_feature_infrastructure_pushgateway_hostname = "${aws_service_discovery_service.aws_uc_feature_infrastructure_services.name}.${aws_service_discovery_private_dns_namespace.aws_uc_feature_infrastructure_services.name}"
 
-  aws_emr_template_repository_max_retry_count = {
+  aws_uc_feature_infrastructure_max_retry_count = {
     development = "0"
     qa          = "0"
     integration = "0"

@@ -14,7 +14,7 @@ data "aws_iam_role" "aws_config" {
   name = "aws_config"
 }
 
-data "aws_iam_policy_document" "aws_emr_template_repository_ebs_cmk" {
+data "aws_iam_policy_document" "aws_uc_feature_infrastructure_ebs_cmk" {
   statement {
     sid    = "EnableIAMPermissionsBreakglass"
     effect = "Allow"
@@ -113,7 +113,7 @@ data "aws_iam_policy_document" "aws_emr_template_repository_ebs_cmk" {
 
     principals {
       type        = "AWS"
-      identifiers = [aws_iam_role.aws_emr_template_repository_emr_service.arn, aws_iam_role.aws_emr_template_repository.arn]
+      identifiers = [aws_iam_role.aws_uc_feature_infrastructure_emr_service.arn, aws_iam_role.aws_uc_feature_infrastructure.arn]
     }
 
     actions = [
@@ -129,12 +129,12 @@ data "aws_iam_policy_document" "aws_emr_template_repository_ebs_cmk" {
   }
 
   statement {
-    sid    = "Allowaws_emr_template_repositoryServiceGrant"
+    sid    = "Allowaws_uc_feature_infrastructureServiceGrant"
     effect = "Allow"
 
     principals {
       type        = "AWS"
-      identifiers = [aws_iam_role.aws_emr_template_repository_emr_service.arn, aws_iam_role.aws_emr_template_repository.arn]
+      identifiers = [aws_iam_role.aws_uc_feature_infrastructure_emr_service.arn, aws_iam_role.aws_uc_feature_infrastructure.arn]
     }
 
     actions = ["kms:CreateGrant"]
@@ -149,28 +149,28 @@ data "aws_iam_policy_document" "aws_emr_template_repository_ebs_cmk" {
   }
 }
 
-resource "aws_kms_key" "aws_emr_template_repository_ebs_cmk" {
-  description             = "Encrypts aws_emr_template_repository EBS volumes"
+resource "aws_kms_key" "aws_uc_feature_infrastructure_ebs_cmk" {
+  description             = "Encrypts aws_uc_feature_infrastructure EBS volumes"
   deletion_window_in_days = 7
   is_enabled              = true
   enable_key_rotation     = true
-  policy                  = data.aws_iam_policy_document.aws_emr_template_repository_ebs_cmk.json
+  policy                  = data.aws_iam_policy_document.aws_uc_feature_infrastructure_ebs_cmk.json
 
-  # ProtectsSensitiveData = "True" - the aws_emr_template_repository cluster decrypts sensitive data
+  # ProtectsSensitiveData = "True" - the aws_uc_feature_infrastructure cluster decrypts sensitive data
   # that it reads from HBase. It can potentially spill this to disk if it can't
   # hold it all in memory, which is likely given the size of the dataset.
   tags = {
-    Name                  = "aws_emr_template_repository_ebs_cmk"
+    Name                  = "aws_uc_feature_infrastructure_ebs_cmk"
     ProtectsSensitiveData = "True"
   }
 }
 
-resource "aws_kms_alias" "aws_emr_template_repository_ebs_cmk" {
-  name          = "alias/aws_emr_template_repository_ebs_cmk"
-  target_key_id = aws_kms_key.aws_emr_template_repository_ebs_cmk.key_id
+resource "aws_kms_alias" "aws_uc_feature_infrastructure_ebs_cmk" {
+  name          = "alias/aws_uc_feature_infrastructure_ebs_cmk"
+  target_key_id = aws_kms_key.aws_uc_feature_infrastructure_ebs_cmk.key_id
 }
 
-data "aws_iam_policy_document" "aws_emr_template_repository_ebs_cmk_encrypt" {
+data "aws_iam_policy_document" "aws_uc_feature_infrastructure_ebs_cmk_encrypt" {
   statement {
     effect = "Allow"
 
@@ -182,7 +182,7 @@ data "aws_iam_policy_document" "aws_emr_template_repository_ebs_cmk_encrypt" {
       "kms:DescribeKey",
     ]
 
-    resources = [aws_kms_key.aws_emr_template_repository_ebs_cmk.arn]
+    resources = [aws_kms_key.aws_uc_feature_infrastructure_ebs_cmk.arn]
   }
 
   statement {
@@ -190,7 +190,7 @@ data "aws_iam_policy_document" "aws_emr_template_repository_ebs_cmk_encrypt" {
 
     actions = ["kms:CreateGrant"]
 
-    resources = [aws_kms_key.aws_emr_template_repository_ebs_cmk.arn]
+    resources = [aws_kms_key.aws_uc_feature_infrastructure_ebs_cmk.arn]
     condition {
       test     = "Bool"
       variable = "kms:GrantIsForAWSResource"
@@ -199,11 +199,11 @@ data "aws_iam_policy_document" "aws_emr_template_repository_ebs_cmk_encrypt" {
   }
 }
 
-resource "aws_iam_policy" "aws_emr_template_repository_ebs_cmk_encrypt" {
-  name        = "aws-emr-template-repository-EbsCmkEncrypt"
-  description = "Allow encryption and decryption using the aws_emr_template_repository EBS CMK"
-  policy      = data.aws_iam_policy_document.aws_emr_template_repository_ebs_cmk_encrypt.json
+resource "aws_iam_policy" "aws_uc_feature_infrastructure_ebs_cmk_encrypt" {
+  name        = "aws-uc-feature-infrastructure-EbsCmkEncrypt"
+  description = "Allow encryption and decryption using the aws_uc_feature_infrastructure EBS CMK"
+  policy      = data.aws_iam_policy_document.aws_uc_feature_infrastructure_ebs_cmk_encrypt.json
   tags = {
-    Name = "aws_emr_template_repository_ebs_cmk_encrypt"
+    Name = "aws_uc_feature_infrastructure_ebs_cmk_encrypt"
   }
 }

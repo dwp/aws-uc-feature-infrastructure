@@ -5,7 +5,7 @@ set -euo pipefail
     source /opt/emr/logging.sh
 
     function log_wrapper_message() {
-        log_aws_emr_template_repository_message "$1" "metrics-setup.sh" "$$" "Running as: $USER"
+        log_aws_uc_feature_infrastructure_message "$1" "metrics-setup.sh" "$$" "Running as: $USER"
     }
 
     log_wrapper_message "Pulling files from S3"
@@ -43,4 +43,4 @@ set -euo pipefail
     export MAVEN_OPTS="-DproxyHost=$PROXY_HOST -DproxyPort=$PROXY_PORT"
     $METRICS_FILEPATH/$MAVEN/bin/mvn -f $METRICS_FILEPATH/pom.xml dependency:copy-dependencies -DoutputDirectory="$METRICS_FILEPATH/dependencies"
 
-) >> /var/log/aws-emr-template-repository/metrics-setup.log 2>&1
+) >> /var/log/aws-uc-feature-infrastructure/metrics-setup.log 2>&1

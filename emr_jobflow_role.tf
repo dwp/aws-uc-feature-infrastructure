@@ -11,38 +11,38 @@ data "aws_iam_policy_document" "ec2_assume_role" {
   }
 }
 
-resource "aws_iam_role" "aws_emr_template_repository" {
-  name               = "aws_emr_template_repository"
+resource "aws_iam_role" "aws_uc_feature_infrastructure" {
+  name               = "aws_uc_feature_infrastructure"
   assume_role_policy = data.aws_iam_policy_document.ec2_assume_role.json
   tags = {
-    Name = "aws_emr_template_repository"
+    Name = "aws_uc_feature_infrastructure"
   }
 }
 
-resource "aws_iam_instance_profile" "aws_emr_template_repository" {
-  name = "aws_emr_template_repository"
-  role = aws_iam_role.aws_emr_template_repository.id
+resource "aws_iam_instance_profile" "aws_uc_feature_infrastructure" {
+  name = "aws_uc_feature_infrastructure"
+  role = aws_iam_role.aws_uc_feature_infrastructure.id
   tags = {
-    Name = "aws_emr_template_repository"
+    Name = "aws_uc_feature_infrastructure"
   }
 }
 
 resource "aws_iam_role_policy_attachment" "ec2_for_ssm_attachment" {
-  role       = aws_iam_role.aws_emr_template_repository.name
+  role       = aws_iam_role.aws_uc_feature_infrastructure.name
   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonEC2RoleforSSM"
 }
 
-resource "aws_iam_role_policy_attachment" "aws_emr_template_repository_ebs_cmk" {
-  role       = aws_iam_role.aws_emr_template_repository.name
-  policy_arn = aws_iam_policy.aws_emr_template_repository_ebs_cmk_encrypt.arn
+resource "aws_iam_role_policy_attachment" "aws_uc_feature_infrastructure_ebs_cmk" {
+  role       = aws_iam_role.aws_uc_feature_infrastructure.name
+  policy_arn = aws_iam_policy.aws_uc_feature_infrastructure_ebs_cmk_encrypt.arn
 }
 
-resource "aws_iam_role_policy_attachment" "aws_emr_template_repository_acm" {
-  role       = aws_iam_role.aws_emr_template_repository.name
-  policy_arn = aws_iam_policy.aws_emr_template_repository_acm.arn
+resource "aws_iam_role_policy_attachment" "aws_uc_feature_infrastructure_acm" {
+  role       = aws_iam_role.aws_uc_feature_infrastructure.name
+  policy_arn = aws_iam_policy.aws_uc_feature_infrastructure_acm.arn
 }
 
-data "aws_iam_policy_document" "aws_emr_template_repository_extra_ssm_properties" {
+data "aws_iam_policy_document" "aws_uc_feature_infrastructure_extra_ssm_properties" {
   statement {
     effect = "Allow"
     actions = [
@@ -114,26 +114,26 @@ data "aws_iam_policy_document" "aws_emr_template_repository_extra_ssm_properties
   }
 }
 
-resource "aws_iam_policy" "aws_emr_template_repository_extra_ssm_properties" {
+resource "aws_iam_policy" "aws_uc_feature_infrastructure_extra_ssm_properties" {
   name        = "AwsEmrTemplateRepositoryExtraSSM"
   description = "Additional properties to allow for SSM and writing logs"
-  policy      = data.aws_iam_policy_document.aws_emr_template_repository_extra_ssm_properties.json
+  policy      = data.aws_iam_policy_document.aws_uc_feature_infrastructure_extra_ssm_properties.json
   tags = {
-    Name = "aws_emr_template_repository_extra_ssm_properties"
+    Name = "aws_uc_feature_infrastructure_extra_ssm_properties"
   }
 }
 
-resource "aws_iam_role_policy_attachment" "aws_emr_template_repository_extra_ssm_properties" {
-  role       = aws_iam_role.aws_emr_template_repository.name
-  policy_arn = aws_iam_policy.aws_emr_template_repository_extra_ssm_properties.arn
+resource "aws_iam_role_policy_attachment" "aws_uc_feature_infrastructure_extra_ssm_properties" {
+  role       = aws_iam_role.aws_uc_feature_infrastructure.name
+  policy_arn = aws_iam_policy.aws_uc_feature_infrastructure_extra_ssm_properties.arn
 }
 
-resource "aws_iam_role_policy_attachment" "aws_emr_template_repository_certificates" {
-  role       = aws_iam_role.aws_emr_template_repository.name
-  policy_arn = aws_iam_policy.aws_emr_template_repository_certificates.arn
+resource "aws_iam_role_policy_attachment" "aws_uc_feature_infrastructure_certificates" {
+  role       = aws_iam_role.aws_uc_feature_infrastructure.name
+  policy_arn = aws_iam_policy.aws_uc_feature_infrastructure_certificates.arn
 }
 
-data "aws_iam_policy_document" "aws_emr_template_repository_write_logs" {
+data "aws_iam_policy_document" "aws_uc_feature_infrastructure_write_logs" {
   statement {
     effect = "Allow"
 
@@ -162,21 +162,21 @@ data "aws_iam_policy_document" "aws_emr_template_repository_write_logs" {
   }
 }
 
-resource "aws_iam_policy" "aws_emr_template_repository_write_logs" {
-  name        = "aws-emr-template-repository-WriteLogs"
-  description = "Allow writing of aws_emr_template_repository logs"
-  policy      = data.aws_iam_policy_document.aws_emr_template_repository_write_logs.json
+resource "aws_iam_policy" "aws_uc_feature_infrastructure_write_logs" {
+  name        = "aws-uc-feature-infrastructure-WriteLogs"
+  description = "Allow writing of aws_uc_feature_infrastructure logs"
+  policy      = data.aws_iam_policy_document.aws_uc_feature_infrastructure_write_logs.json
   tags = {
-    Name = "aws_emr_template_repository_write_logs"
+    Name = "aws_uc_feature_infrastructure_write_logs"
   }
 }
 
-resource "aws_iam_role_policy_attachment" "aws_emr_template_repository_write_logs" {
-  role       = aws_iam_role.aws_emr_template_repository.name
-  policy_arn = aws_iam_policy.aws_emr_template_repository_write_logs.arn
+resource "aws_iam_role_policy_attachment" "aws_uc_feature_infrastructure_write_logs" {
+  role       = aws_iam_role.aws_uc_feature_infrastructure.name
+  policy_arn = aws_iam_policy.aws_uc_feature_infrastructure_write_logs.arn
 }
 
-data "aws_iam_policy_document" "aws_emr_template_repository_read_config" {
+data "aws_iam_policy_document" "aws_uc_feature_infrastructure_read_config" {
   statement {
     effect = "Allow"
 
@@ -216,21 +216,21 @@ data "aws_iam_policy_document" "aws_emr_template_repository_read_config" {
   }
 }
 
-resource "aws_iam_policy" "aws_emr_template_repository_read_config" {
-  name        = "aws-emr-template-repository-ReadConfig"
-  description = "Allow reading of aws_emr_template_repository config files"
-  policy      = data.aws_iam_policy_document.aws_emr_template_repository_read_config.json
+resource "aws_iam_policy" "aws_uc_feature_infrastructure_read_config" {
+  name        = "aws-uc-feature-infrastructure-ReadConfig"
+  description = "Allow reading of aws_uc_feature_infrastructure config files"
+  policy      = data.aws_iam_policy_document.aws_uc_feature_infrastructure_read_config.json
   tags = {
-    Name = "aws_emr_template_repository_read_config"
+    Name = "aws_uc_feature_infrastructure_read_config"
   }
 }
 
-resource "aws_iam_role_policy_attachment" "aws_emr_template_repository_read_config" {
-  role       = aws_iam_role.aws_emr_template_repository.name
-  policy_arn = aws_iam_policy.aws_emr_template_repository_read_config.arn
+resource "aws_iam_role_policy_attachment" "aws_uc_feature_infrastructure_read_config" {
+  role       = aws_iam_role.aws_uc_feature_infrastructure.name
+  policy_arn = aws_iam_policy.aws_uc_feature_infrastructure_read_config.arn
 }
 
-data "aws_iam_policy_document" "aws_emr_template_repository_read_artefacts" {
+data "aws_iam_policy_document" "aws_uc_feature_infrastructure_read_artefacts" {
   statement {
     effect = "Allow"
 
@@ -270,21 +270,21 @@ data "aws_iam_policy_document" "aws_emr_template_repository_read_artefacts" {
   }
 }
 
-resource "aws_iam_policy" "aws_emr_template_repository_read_artefacts" {
-  name        = "aws-emr-template-repository-ReadArtefacts"
-  description = "Allow reading of aws_emr_template_repository software artefacts"
-  policy      = data.aws_iam_policy_document.aws_emr_template_repository_read_artefacts.json
+resource "aws_iam_policy" "aws_uc_feature_infrastructure_read_artefacts" {
+  name        = "aws-uc-feature-infrastructure-ReadArtefacts"
+  description = "Allow reading of aws_uc_feature_infrastructure software artefacts"
+  policy      = data.aws_iam_policy_document.aws_uc_feature_infrastructure_read_artefacts.json
   tags = {
-    Name = "aws_emr_template_repository_read_artefacts"
+    Name = "aws_uc_feature_infrastructure_read_artefacts"
   }
 }
 
-resource "aws_iam_role_policy_attachment" "aws_emr_template_repository_read_artefacts" {
-  role       = aws_iam_role.aws_emr_template_repository.name
-  policy_arn = aws_iam_policy.aws_emr_template_repository_read_artefacts.arn
+resource "aws_iam_role_policy_attachment" "aws_uc_feature_infrastructure_read_artefacts" {
+  role       = aws_iam_role.aws_uc_feature_infrastructure.name
+  policy_arn = aws_iam_policy.aws_uc_feature_infrastructure_read_artefacts.arn
 }
 
-data "aws_iam_policy_document" "aws_emr_template_repository_write_dynamodb" {
+data "aws_iam_policy_document" "aws_uc_feature_infrastructure_write_dynamodb" {
   statement {
     effect = "Allow"
 
@@ -298,21 +298,21 @@ data "aws_iam_policy_document" "aws_emr_template_repository_write_dynamodb" {
   }
 }
 
-resource "aws_iam_policy" "aws_emr_template_repository_write_dynamodb" {
+resource "aws_iam_policy" "aws_uc_feature_infrastructure_write_dynamodb" {
   name        = "AwsEmrTemplateRepositoryDynamoDB"
-  description = "Allows read and write access toaws_emr_template_repository's EMRFS DynamoDB table"
-  policy      = data.aws_iam_policy_document.aws_emr_template_repository_write_dynamodb.json
+  description = "Allows read and write access toaws_uc_feature_infrastructure's EMRFS DynamoDB table"
+  policy      = data.aws_iam_policy_document.aws_uc_feature_infrastructure_write_dynamodb.json
   tags = {
-    Name = "aws_emr_template_repository_write_dynamodb"
+    Name = "aws_uc_feature_infrastructure_write_dynamodb"
   }
 }
 
 resource "aws_iam_role_policy_attachment" "analytical_dataset_generator_dynamodb" {
-  role       = aws_iam_role.aws_emr_template_repository.name
-  policy_arn = aws_iam_policy.aws_emr_template_repository_write_dynamodb.arn
+  role       = aws_iam_role.aws_uc_feature_infrastructure.name
+  policy_arn = aws_iam_policy.aws_uc_feature_infrastructure_write_dynamodb.arn
 }
 
-data "aws_iam_policy_document" "aws_emr_template_repository_metadata_change" {
+data "aws_iam_policy_document" "aws_uc_feature_infrastructure_metadata_change" {
   statement {
     effect = "Allow"
 
@@ -327,21 +327,21 @@ data "aws_iam_policy_document" "aws_emr_template_repository_metadata_change" {
   }
 }
 
-resource "aws_iam_role_policy_attachment" "aws_emr_template_repository_read_write_processed_bucket" {
-  role       = aws_iam_role.aws_emr_template_repository.name
-  policy_arn = aws_iam_policy.aws_emr_template_repository_read_write_processed_bucket.arn
+resource "aws_iam_role_policy_attachment" "aws_uc_feature_infrastructure_read_write_processed_bucket" {
+  role       = aws_iam_role.aws_uc_feature_infrastructure.name
+  policy_arn = aws_iam_policy.aws_uc_feature_infrastructure_read_write_processed_bucket.arn
 }
 
-resource "aws_iam_policy" "aws_emr_template_repository_metadata_change" {
-  name        = "aws-emr-template-repository-MetadataOptions"
+resource "aws_iam_policy" "aws_uc_feature_infrastructure_metadata_change" {
+  name        = "aws-uc-feature-infrastructure-MetadataOptions"
   description = "Allow editing of Metadata Options"
-  policy      = data.aws_iam_policy_document.aws_emr_template_repository_metadata_change.json
+  policy      = data.aws_iam_policy_document.aws_uc_feature_infrastructure_metadata_change.json
   tags = {
-    Name = "aws_emr_template_repository_metadata_change"
+    Name = "aws_uc_feature_infrastructure_metadata_change"
   }
 }
 
-resource "aws_iam_role_policy_attachment" "aws_emr_template_repository_metadata_change" {
-  role       = aws_iam_role.aws_emr_template_repository.name
-  policy_arn = aws_iam_policy.aws_emr_template_repository_metadata_change.arn
+resource "aws_iam_role_policy_attachment" "aws_uc_feature_infrastructure_metadata_change" {
+  role       = aws_iam_role.aws_uc_feature_infrastructure.name
+  policy_arn = aws_iam_policy.aws_uc_feature_infrastructure_metadata_change.arn
 }

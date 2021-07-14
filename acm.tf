@@ -1,16 +1,16 @@
-resource "aws_acm_certificate" "aws_emr_template_repository" {
+resource "aws_acm_certificate" "aws_uc_feature_infrastructure" {
   certificate_authority_arn = data.terraform_remote_state.aws_certificate_authority.outputs.root_ca.arn
-  domain_name               = "aws-emr-template-repository.${local.env_prefix[local.environment]}${local.dataworks_domain_name}"
+  domain_name               = "aws-uc-feature-infrastructure.${local.env_prefix[local.environment]}${local.dataworks_domain_name}"
 
   options {
     certificate_transparency_logging_preference = "ENABLED"
   }
   tags = {
-    Name = "aws_emr_template_repository"
+    Name = "aws_uc_feature_infrastructure"
   }
 }
 
-data "aws_iam_policy_document" "aws_emr_template_repository_acm" {
+data "aws_iam_policy_document" "aws_uc_feature_infrastructure_acm" {
   statement {
     effect = "Allow"
 
@@ -19,21 +19,21 @@ data "aws_iam_policy_document" "aws_emr_template_repository_acm" {
     ]
 
     resources = [
-      aws_acm_certificate.aws_emr_template_repository.arn
+      aws_acm_certificate.aws_uc_feature_infrastructure.arn
     ]
   }
 }
 
-resource "aws_iam_policy" "aws_emr_template_repository_acm" {
-  name        = "ACMExport-aws-emr-template-repository-Cert"
-  description = "Allow export of aws-emr-template-repository certificate"
-  policy      = data.aws_iam_policy_document.aws_emr_template_repository_acm.json
+resource "aws_iam_policy" "aws_uc_feature_infrastructure_acm" {
+  name        = "ACMExport-aws-uc-feature-infrastructure-Cert"
+  description = "Allow export of aws-uc-feature-infrastructure certificate"
+  policy      = data.aws_iam_policy_document.aws_uc_feature_infrastructure_acm.json
   tags = {
-    Name = "aws_emr_template_repository_acm"
+    Name = "aws_uc_feature_infrastructure_acm"
   }
 }
 
-data "aws_iam_policy_document" "aws_emr_template_repository_certificates" {
+data "aws_iam_policy_document" "aws_uc_feature_infrastructure_certificates" {
   statement {
     effect = "Allow"
 
@@ -49,12 +49,12 @@ data "aws_iam_policy_document" "aws_emr_template_repository_certificates" {
   }
 }
 
-resource "aws_iam_policy" "aws_emr_template_repository_certificates" {
-  name        = "aws_emr_template_repositoryGetCertificates"
-  description = "Allow read access to the Crown-specific subset of the aws_emr_template_repository"
-  policy      = data.aws_iam_policy_document.aws_emr_template_repository_certificates.json
+resource "aws_iam_policy" "aws_uc_feature_infrastructure_certificates" {
+  name        = "aws_uc_feature_infrastructureGetCertificates"
+  description = "Allow read access to the Crown-specific subset of the aws_uc_feature_infrastructure"
+  policy      = data.aws_iam_policy_document.aws_uc_feature_infrastructure_certificates.json
   tags = {
-    Name = "aws_emr_template_repository_certificates"
+    Name = "aws_uc_feature_infrastructure_certificates"
   }
 }
 
