@@ -85,6 +85,36 @@ EOF
   }
 }
 
+resource "aws_cloudwatch_event_rule" "aws_uc_feature_succes_with_errors" {
+  name          = "aws_uc_feature_succes_with_errors"
+  description   = "checks that all mandatory steps complete but with failures on non mandatory steps"
+  event_pattern = <<EOF
+{
+  "source": [
+    "aws.emr"
+  ],
+  "detail-type": [
+    "EMR Cluster State Change"
+  ],
+  "detail": {
+    "state": [
+      "TERMINATED"
+    ],
+    "name": [
+      "${local.emr_cluster_name}"
+    ],
+    "stateChangeReason": [
+      "{\"code\":\"STEP_FAILURE\",\"message\":\"Steps completed with errors\"}"
+    ]
+  }
+}
+EOF
+
+  tags = {
+    Name = "aws_uc_feature_success_with_errors"
+  }
+}
+
 resource "aws_cloudwatch_event_rule" "aws_uc_feature_running" {
   name          = "aws_uc_feature_running"
   description   = "checks that aws_uc_feature is running"
@@ -178,6 +208,29 @@ resource "aws_cloudwatch_metric_alarm" "aws_uc_feature_success" {
     Name              = "aws_uc_feature_success",
     notification_type = "Information",
     severity          = "Critical"
+  }
+}
+
+resource "aws_cloudwatch_metric_alarm" "aws_uc_feature_success_with_errors" {
+  count                     = local.aws_uc_feature_alerts[local.environment] == true ? 1 : 0
+  alarm_name                = "aws_uc_feature_success_with_errors"
+  comparison_operator       = "GreaterThanOrEqualToThreshold"
+  evaluation_periods        = "1"
+  metric_name               = "TriggeredRules"
+  namespace                 = "AWS/Events"
+  period                    = "60"
+  statistic                 = "Sum"
+  threshold                 = "1"
+  alarm_description         = "Monitoring aws_uc_feature completion"
+  insufficient_data_actions = []
+  alarm_actions             = [data.terraform_remote_state.security-tools.outputs.sns_topic_london_monitoring.arn]
+  dimensions = {
+    RuleName = aws_cloudwatch_event_rule.aws_uc_feature_succes_with_errors.name
+  }
+  tags = {
+    Name              = "aws_uc_feature_success_with_errors",
+    notification_type = "Warning",
+    severity          = "High"
   }
 }
 
