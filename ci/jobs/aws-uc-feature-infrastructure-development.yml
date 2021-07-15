@@ -1,5 +1,5 @@
 jobs:
-  - name: aws-uc-feature-infrastructure-development
+  - name: aws-uc-feature-infrastructure-dev
     max_in_flight: 1
     plan:
       - in_parallel:
