@@ -1,26 +1,26 @@
 resources:
-  - name: aws-uc-feature-pr
+  - name: aws-uc-feature-infrastructure-pr
     type: pull-request
     source:
-      repository: dwp/aws-uc-feature
+      repository: dwp/aws-uc-feature-infrastructure
       access_token: ((dataworks-secrets.concourse_github_pat))
     webhook_token: ((dataworks.concourse_github_webhook_token))
     check_every: 5m
 
-  - name: aws-uc-feature
+  - name: aws-uc-feature-infrastructure
     type: git
     source:
       branch: master
-      uri: https://github.com/dwp/aws-uc-feature.git
+      uri: https://github.com/dwp/aws-uc-feature-infrastructure.git
       access_token: ((dataworks-secrets.concourse_github_pat))
     webhook_token: ((dataworks.concourse_github_webhook_token))
     check_every: 5m
 
-  - name: aws-uc-feature-pipeline
+  - name: aws-uc-feature-infrastructure-pipeline
     type: git
     source:
       branch: master
-      uri: https://github.com/dwp/aws-uc-feature.git
+      uri: https://github.com/dwp/aws-uc-feature-infrastructure.git
       access_token: ((dataworks-secrets.concourse_github_pat))
       paths:
         - ci/*

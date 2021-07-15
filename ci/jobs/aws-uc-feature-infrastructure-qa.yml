@@ -1,17 +1,18 @@
 jobs:
-  - name: aws-uc-feature-development
+  - name: aws-uc-feature-infrastructure-qa
     max_in_flight: 1
+    serial_groups: [qa-applies]
     plan:
       - in_parallel:
           - put: meta
-            resource: meta-development
-          - get: aws-uc-feature
+            resource: meta-qa
+          - get: aws-uc-feature-infrastructure
             trigger: true
           - get: emr-launcher-release
-            version: { tag: ((emr-launcher-version.development)) }
+            version: { tag: ((emr-launcher-version.qa)) }
             trigger: true
           - get: emr-relauncher-release
-            version: { tag: ((emr-relauncher-version.development)) }
+            version: { tag: ((emr-relauncher-version.qa)) }
             trigger: true
           - get: dataworks-behavioural-framework
             trigger: false
@@ -20,10 +21,11 @@ jobs:
       - .: (( inject meta.plan.terraform-bootstrap ))
         config:
           params:
-            AWS_ACC: ((aws_account.development))
+            AWS_ACC: ((aws_account.qa))
       - .: (( inject meta.plan.terraform-apply ))
         params:
-          TF_WORKSPACE: default
+          TF_WORKSPACE: qa
       - .: (( inject meta.plan.terraform-plan ))
         params:
-          TF_WORKSPACE: default
+          TF_WORKSPACE: qa
+

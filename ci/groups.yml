@@ -1,15 +1,15 @@
 groups:
   - name: master
     jobs:
-      - aws-uc-feature-development
-      - aws-uc-feature-qa
-      - aws-uc-feature-int
-      - aws-uc-feature-preprod
-      - aws-uc-feature-prod
+      - aws-uc-feature-infrastructure-dev
+      - aws-uc-feature-infrastructure-qa
+      - aws-uc-feature-infrastructure-int
+      - aws-uc-feature-infrastructure-preprod
+      - aws-uc-feature-infrastructure-prod
 
   - name: pull-request
     jobs:
-      - aws-uc-feature-pr
+      - aws-uc-feature-infrastructure-pr
 
   - name: update-pipeline
     jobs:

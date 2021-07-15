@@ -6,24 +6,24 @@ jobs:
       - in_parallel:
           - put: meta
             resource: meta-qa
-          - get: aws-uc-feature
+          - get: aws-uc-feature-infrastructure
             trigger: false
             passed:
-              - aws-uc-feature-qa
+              - aws-uc-feature-infrastructure-qa
           - get: dataworks-behavioural-framework
             trigger: false
             passed:
-              - aws-uc-feature-qa
+              - aws-uc-feature-infrastructure-qa
           - get: emr-launcher-release
             version: { tag: ((emr-launcher-version.qa)) }
             trigger: false
             passed:
-              - aws-uc-feature-qa
+              - aws-uc-feature-infrastructure-qa
           - get: emr-relauncher-release
             version: { tag: ((emr-relauncher-version.qa)) }
             trigger: false
             passed:
-              - aws-uc-feature-qa
+              - aws-uc-feature-infrastructure-qa
           - get: al2-emr-ami
             resource: untested-al2-emr-ami
             trigger: true
