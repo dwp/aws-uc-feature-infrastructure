@@ -1,11 +1,11 @@
 jobs:
-  - name: aws-uc-feature-development
+  - name: aws-uc-feature-infrastructure-development
     max_in_flight: 1
     plan:
       - in_parallel:
           - put: meta
             resource: meta-development
-          - get: aws-uc-feature
+          - get: aws-uc-feature-infrastructure
             trigger: true
           - get: emr-launcher-release
             version: { tag: ((emr-launcher-version.development)) }
