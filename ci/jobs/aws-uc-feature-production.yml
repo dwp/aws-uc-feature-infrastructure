@@ -1,26 +1,26 @@
 jobs:
-  - name: aws-uc-feature-infrastructure-prod
+  - name: aws-uc-feature-prod
     max_in_flight: 1
     plan:
       - in_parallel:
-          - get: aws-uc-feature-infrastructure
+          - get: aws-uc-feature
             trigger: true
             passed:
-              - aws-uc-feature-infrastructure-preprod
+              - aws-uc-feature-preprod
           - get: emr-launcher-release
             version: { tag: ((emr-launcher-version.production)) }
             trigger: true
             passed:
-            - aws-uc-feature-infrastructure-preprod
+            - aws-uc-feature-preprod
           - get: emr-relauncher-release
             version: { tag: ((emr-relauncher-version.production)) }
             trigger: true
             passed:
-            - aws-uc-feature-infrastructure-preprod
+            - aws-uc-feature-preprod
           - get: al2-emr-ami
             trigger: true
             passed:
-            - aws-uc-feature-infrastructure-preprod
+            - aws-uc-feature-preprod
       - .: (( inject meta.plan.terraform-bootstrap ))
         config:
           params:

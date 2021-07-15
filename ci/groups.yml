@@ -1,7 +1,7 @@
 groups:
   - name: master
     jobs:
-      - aws-uc-feature-infrastructure-development
+      - aws-uc-feature-infrastructure-dev
       - aws-uc-feature-infrastructure-qa
       - aws-uc-feature-infrastructure-int
       - aws-uc-feature-infrastructure-preprod
@@ -14,4 +14,3 @@ groups:
   - name: update-pipeline
     jobs:
       - update-pipeline
-

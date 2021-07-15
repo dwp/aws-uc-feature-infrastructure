@@ -34,9 +34,9 @@ meta:
               sed -i '/^assume_role/ d' terraform.tfvars
               cp terraform.tf ../terraform-config
               cp terraform.tfvars ../terraform-config
-          dir: aws-uc-feature-infrastructure
+          dir: aws-uc-feature
         inputs:
-          - name: aws-uc-feature-infrastructure
+          - name: aws-uc-feature
         outputs:
           - name: terraform-config
       params:
@@ -54,7 +54,7 @@ meta:
             tag: ((dataworks.terraform_13_version))
         run:
           path: sh
-          dir: aws-uc-feature-infrastructure
+          dir: aws-uc-feature
           args:
             - -exc
             - |
@@ -68,7 +68,7 @@ meta:
               terraform plan -out terraform.plan
               terraform apply -auto-approve terraform.plan
         inputs:
-          - name: aws-uc-feature-infrastructure
+          - name: aws-uc-feature
           - name: terraform-config
           - name: emr-launcher-release
           - name: al2-emr-ami
@@ -91,9 +91,9 @@ meta:
               terraform workspace show
               terraform init
               terraform plan $DETAILED_EXITCODE
-          dir: aws-uc-feature-infrastructure
+          dir: aws-uc-feature
         inputs:
-          - name: aws-uc-feature-infrastructure
+          - name: aws-uc-feature
           - name: terraform-config
           - name: emr-launcher-release
           - name: al2-emr-ami
@@ -129,7 +129,7 @@ meta:
               "../../../meta"
         inputs:
           - name: dataworks-behavioural-framework
-          - name: aws-uc-feature-infrastructure
+          - name: aws-uc-feature
           - name: meta
 
     ami-test-results:
