@@ -44,7 +44,7 @@ data "aws_iam_policy_document" "aws_uc_feature_write" {
 }
 
 resource "aws_iam_policy" "aws_uc_feature_read_write_processed_bucket" {
-  name        = "aws-uc-feature-ReadWriteAccessToProcessedBucket"
+  name        = "${local.emr_cluster_name}-ReadWriteAccessToProcessedBucket"
   description = "Allow read and write access to the processed bucket"
   policy      = data.aws_iam_policy_document.aws_uc_feature_write.json
   tags = {
