@@ -168,7 +168,7 @@ data "aws_iam_policy_document" "aws_uc_feature_write_logs" {
 }
 
 resource "aws_iam_policy" "aws_uc_feature_write_logs" {
-  name        = "aws-uc-feature-WriteLogs"
+  name        = "${local.emr_cluster_name}-WriteLogs"
   description = "Allow writing of aws_uc_feature logs"
   policy      = data.aws_iam_policy_document.aws_uc_feature_write_logs.json
   tags = {
@@ -216,13 +216,13 @@ data "aws_iam_policy_document" "aws_uc_feature_read_config" {
     ]
 
     resources = [
-      "${data.terraform_remote_state.common.outputs.config_bucket_cmk.arn}",
+      data.terraform_remote_state.common.outputs.config_bucket_cmk.arn,
     ]
   }
 }
 
 resource "aws_iam_policy" "aws_uc_feature_read_config" {
-  name        = "aws-uc-feature-ReadConfig"
+  name        = "${local.emr_cluster_name}-ReadConfig"
   description = "Allow reading of aws_uc_feature config files"
   policy      = data.aws_iam_policy_document.aws_uc_feature_read_config.json
   tags = {
@@ -276,7 +276,7 @@ data "aws_iam_policy_document" "aws_uc_feature_read_artefacts" {
 }
 
 resource "aws_iam_policy" "aws_uc_feature_read_artefacts" {
-  name        = "aws-uc-feature-ReadArtefacts"
+  name        = "${local.emr_cluster_name}-ReadArtefacts"
   description = "Allow reading of aws_uc_feature software artefacts"
   policy      = data.aws_iam_policy_document.aws_uc_feature_read_artefacts.json
   tags = {
@@ -338,7 +338,7 @@ resource "aws_iam_role_policy_attachment" "aws_uc_feature_read_write_processed_b
 }
 
 resource "aws_iam_policy" "aws_uc_feature_metadata_change" {
-  name        = "aws-uc-feature-MetadataOptions"
+  name        = "${local.emr_cluster_name}-MetadataOptions"
   description = "Allow editing of Metadata Options"
   policy      = data.aws_iam_policy_document.aws_uc_feature_metadata_change.json
   tags = {

@@ -2,12 +2,12 @@ locals {
 
   overridden_tags = {
     Role         = "emr_template_repository"
-    Owner        = "aws-uc-feature"
+    Owner        = local.emr_cluster_name
     Persistence  = "Ignore"
     AutoShutdown = local.auto_shutdown_tag_value[local.environment]
   }
 
-  common_repo_tags = "${merge(module.dataworks_common.common_tags, local.overridden_tags)}"
+  common_repo_tags = merge(module.dataworks_common.common_tags, local.overridden_tags)
 
   emr_cluster_name = "aws-uc-feature"
 
@@ -291,5 +291,12 @@ locals {
     integration = "1099"
     preprod     = "1099"
     production  = "1099"
+  }
+
+  data_classification = {
+    config_bucket_id = data.terraform_remote_state.common.outputs.config_bucket.id
+    config_prefix    = data.terraform_remote_state.aws_s3_object_tagger.outputs.uc_feature_object_tagger_data_classification.config_prefix
+    data_s3_prefix   = data.terraform_remote_state.aws_s3_object_tagger.outputs.uc_feature_object_tagger_data_classification.data_s3_prefix
+    config_file      = data.terraform_remote_state.aws_s3_object_tagger.outputs.uc_feature_object_tagger_data_classification.config_file
   }
 }

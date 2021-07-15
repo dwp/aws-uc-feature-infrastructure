@@ -200,7 +200,7 @@ data "aws_iam_policy_document" "aws_uc_feature_ebs_cmk_encrypt" {
 }
 
 resource "aws_iam_policy" "aws_uc_feature_ebs_cmk_encrypt" {
-  name        = "aws-uc-feature-EbsCmkEncrypt"
+  name        = "${local.emr_cluster_name}-EbsCmkEncrypt"
   description = "Allow encryption and decryption using the aws_uc_feature EBS CMK"
   policy      = data.aws_iam_policy_document.aws_uc_feature_ebs_cmk_encrypt.json
   tags = {

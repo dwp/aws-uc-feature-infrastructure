@@ -1,6 +1,6 @@
 resource "aws_acm_certificate" "aws_uc_feature" {
   certificate_authority_arn = data.terraform_remote_state.aws_certificate_authority.outputs.root_ca.arn
-  domain_name               = "aws-uc-feature.${local.env_prefix[local.environment]}${local.dataworks_domain_name}"
+  domain_name               = "${local.emr_cluster_name}.${local.env_prefix[local.environment]}${local.dataworks_domain_name}"
 
   options {
     certificate_transparency_logging_preference = "ENABLED"
@@ -25,7 +25,7 @@ data "aws_iam_policy_document" "aws_uc_feature_acm" {
 }
 
 resource "aws_iam_policy" "aws_uc_feature_acm" {
-  name        = "ACMExport-aws-uc-feature-Cert"
+  name        = "ACMExport-${local.emr_cluster_name}-Cert"
   description = "Allow export of aws-uc-feature certificate"
   policy      = data.aws_iam_policy_document.aws_uc_feature_acm.json
   tags = {

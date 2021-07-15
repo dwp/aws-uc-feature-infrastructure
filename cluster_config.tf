@@ -13,6 +13,7 @@ resource "aws_s3_bucket_object" "cluster" {
   key    = "emr/aws_uc_feature/cluster.yaml"
   content = templatefile("${path.module}/cluster_config/cluster.yaml.tpl",
     {
+      emr_cluster_name       = local.emr_cluster_name
       s3_log_bucket          = data.terraform_remote_state.security-tools.outputs.logstore_bucket.id
       s3_log_prefix          = local.s3_log_prefix
       ami_id                 = var.emr_ami_id

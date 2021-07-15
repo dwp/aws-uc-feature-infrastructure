@@ -14,7 +14,7 @@ resource "aws_cloudwatch_event_rule" "aws_uc_feature_failed" {
       "TERMINATED_WITH_ERRORS"
     ],
     "name": [
-      "aws-uc-feature"
+      "${local.emr_cluster_name}"
     ]
   }
 }
@@ -41,7 +41,7 @@ resource "aws_cloudwatch_event_rule" "aws_uc_feature_terminated" {
       "TERMINATED"
     ],
     "name": [
-      "aws-uc-feature"
+      "${local.emr_cluster_name}"
     ],
     "stateChangeReason": [
       "{\"code\":\"USER_REQUEST\",\"message\":\"User request\"}"
@@ -71,7 +71,7 @@ resource "aws_cloudwatch_event_rule" "aws_uc_feature_success" {
       "TERMINATED"
     ],
     "name": [
-      "aws-uc-feature"
+      "${local.emr_cluster_name}"
     ],
     "stateChangeReason": [
       "{\"code\":\"ALL_STEPS_COMPLETED\",\"message\":\"Steps completed\"}"
@@ -101,7 +101,7 @@ resource "aws_cloudwatch_event_rule" "aws_uc_feature_running" {
       "RUNNING"
     ],
     "name": [
-      "aws-uc-feature"
+      "${local.emr_cluster_name}"
     ]
   }
 }

@@ -43,7 +43,7 @@ data "aws_iam_policy_document" "aws_uc_feature_write_data" {
     ]
 
     resources = [
-      "${data.terraform_remote_state.common.outputs.published_bucket_cmk.arn}",
+      data.terraform_remote_state.common.outputs.published_bucket_cmk.arn,
     ]
   }
 }
