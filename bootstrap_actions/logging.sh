@@ -2,14 +2,14 @@
 
 source /opt/shared/common_logging.sh
 
-log_aws_uc_feature_infrastructure_message() {
+log_aws_uc_feature_message() {
     set +u
 
     message="${1}"
     component="${2}"
     process_id="${3}"
 
-    application="aws_uc_feature_infrastructure"
+    application="aws_uc_feature"
 
     app_version="NOT_SET"
     if [ -f "/opt/emr/version" ]; then

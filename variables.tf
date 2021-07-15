@@ -19,8 +19,8 @@ variable "emr_instance_type_master" {
     development = "m5.4xlarge"
     qa          = "m5.4xlarge"
     integration = "m5.4xlarge"
-    preprod     = "m5.16xlarge"
-    production  = "m5.16xlarge"
+    preprod     = "m5.4xlarge"
+    production  = "m5.4xlarge"
   }
 }
 
@@ -29,8 +29,8 @@ variable "emr_instance_type_core_one" {
     development = "m5.4xlarge"
     qa          = "m5.4xlarge"
     integration = "m5.4xlarge"
-    preprod     = "m5.16xlarge"
-    production  = "m5.16xlarge"
+    preprod     = "m5.4xlarge"
+    production  = "m5.4xlarge"
   }
 }
 
@@ -40,8 +40,8 @@ variable "emr_core_instance_count" {
     development = "10"
     qa          = "10"
     integration = "10"
-    preprod     = "39"
-    production  = "39"
+    preprod     = "10"
+    production  = "10"
   }
 }
 
@@ -49,19 +49,3 @@ variable "emr_ami_id" {
   description = "AMI ID to use for the HBase EMR nodes"
   default     = "ami-0a5d042ae876f72ff"
 }
-
-variable "hive_tez_container_size" {}
-
-variable "hive_tez_java_opts" {}
-
-variable "tez_grouping_min_size" {}
-
-variable "tez_grouping_max_size" {}
-
-variable "tez_am_resource_memory_mb" {}
-
-variable "tez_am_launch_cmd_opts" {}
-
-variable "tez_runtime_io_sort_mb" {}
-
-variable "hive_auto_convert_join_noconditionaltask_size" {}

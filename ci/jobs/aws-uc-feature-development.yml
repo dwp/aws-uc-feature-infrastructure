@@ -1,11 +1,11 @@
 jobs:
-  - name: aws-uc-feature-infrastructure-dev
+  - name: aws-uc-feature-development
     max_in_flight: 1
     plan:
       - in_parallel:
           - put: meta
             resource: meta-development
-          - get: aws-uc-feature-infrastructure
+          - get: aws-uc-feature
             trigger: true
           - get: emr-launcher-release
             version: { tag: ((emr-launcher-version.development)) }
@@ -27,9 +27,3 @@ jobs:
       - .: (( inject meta.plan.terraform-plan ))
         params:
           TF_WORKSPACE: default
-      - .: (( inject meta.plan.e2e-tests))
-        config:
-          params:
-            TF_WORKSPACE: default
-            AWS_ACC: ((aws_account.development))
-            AWS_ROLE_ARN: arn:aws:iam::((aws_account.development)):role/ci

@@ -2,7 +2,7 @@
 BootstrapActions:
 - Name: "download_scripts"
   ScriptBootstrapAction:
-    Path: "s3://${s3_config_bucket}/component/aws-uc-feature-infrastructure/download_scripts.sh"
+    Path: "s3://${s3_config_bucket}/component/aws_uc_feature/download_scripts.sh"
 - Name: "start_ssm"
   ScriptBootstrapAction:
     Path: "file:/var/ci/start_ssm.sh"
@@ -16,10 +16,10 @@ BootstrapActions:
   ScriptBootstrapAction:
     Path: "file:/var/ci/metrics-setup.sh"
 Steps:
-- Name: "example-step-name"
+- Name: "create_uc_feature_dbs"
   HadoopJarStep:
     Args:
-    - "file:/var/ci/example-step-name.sh"
+    - "file:/var/ci/create_uc_feature_dbs.sh"
     Jar: "s3://eu-west-2.elasticmapreduce/libs/script-runner/script-runner.jar"
   ActionOnFailure: "${action_on_failure}"
 

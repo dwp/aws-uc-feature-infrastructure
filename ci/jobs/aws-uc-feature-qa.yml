@@ -1,12 +1,12 @@
 jobs:
-  - name: aws-uc-feature-infrastructure-qa
+  - name: aws-uc-feature-qa
     max_in_flight: 1
     serial_groups: [qa-applies]
     plan:
       - in_parallel:
           - put: meta
             resource: meta-qa
-          - get: aws-uc-feature-infrastructure
+          - get: aws-uc-feature
             trigger: true
           - get: emr-launcher-release
             version: { tag: ((emr-launcher-version.qa)) }
@@ -28,9 +28,4 @@ jobs:
       - .: (( inject meta.plan.terraform-plan ))
         params:
           TF_WORKSPACE: qa
-      - .: (( inject meta.plan.e2e-tests))
-        config:
-          params:
-            TF_WORKSPACE: qa
-            AWS_ACC: ((aws_account.qa))
-            AWS_ROLE_ARN: arn:aws:iam::((aws_account.qa)):role/ci
+

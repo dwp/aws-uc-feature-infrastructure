@@ -1,4 +1,4 @@
-data "aws_iam_policy_document" "aws_uc_feature_infrastructure_write_data" {
+data "aws_iam_policy_document" "aws_uc_feature_write_data" {
   statement {
     effect = "Allow"
 
@@ -25,7 +25,6 @@ data "aws_iam_policy_document" "aws_uc_feature_infrastructure_write_data" {
     resources = [
       "${data.terraform_remote_state.common.outputs.published_bucket.arn}/pdm-dataset/*",
       "${data.terraform_remote_state.common.outputs.published_bucket.arn}/metrics/*",
-      "${data.terraform_remote_state.common.outputs.published_bucket.arn}/common-model-inputs/*",
       "${data.terraform_remote_state.common.outputs.published_bucket.arn}/analytical-dataset/*",
       "${data.terraform_remote_state.common.outputs.published_bucket.arn}/data",
       "${data.terraform_remote_state.common.outputs.published_bucket.arn}/data/*",
@@ -49,9 +48,14 @@ data "aws_iam_policy_document" "aws_uc_feature_infrastructure_write_data" {
   }
 }
 
-resource "aws_iam_policy" "aws_uc_feature_infrastructure_write_data" {
+resource "aws_iam_policy" "aws_uc_feature_write_data" {
   name        = "AwsEMRWriteData"
   description = "Allow writing of aws-emr-template files and metrics"
-  policy      = data.aws_iam_policy_document.aws_uc_feature_infrastructure_write_data.json
+  policy      = data.aws_iam_policy_document.aws_uc_feature_write_data.json
 }
 
+
+resource "aws_iam_role_policy_attachment" "aws_uc_feature_write_data" {
+  role       = aws_iam_role.aws_uc_feature.name
+  policy_arn = aws_iam_policy.aws_uc_feature_write_data.arn
+}
