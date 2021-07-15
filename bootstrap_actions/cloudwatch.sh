@@ -5,8 +5,8 @@ set -Eeuo pipefail
 cwa_metrics_collection_interval="$1"
 cwa_namespace="$2"
 cwa_log_group_name="$3"
-cwa_bootstrap_loggrp_name="$4"
-cwa_steps_loggrp_name="$5"
+cwa_bootstrap_loggrp_name="$5"
+cwa_steps_loggrp_name="$6"
 
 
 export AWS_DEFAULT_REGION="$${4}"
@@ -48,23 +48,29 @@ cat > /opt/aws/amazon-cloudwatch-agent/etc/amazon-cloudwatch-agent.json <<CWAGEN
             "timezone": "UTC"
           },
           {
-            "file_path": "/var/log/aws-uc-feature-infrastructure/acm-cert-retriever.log",
+            "file_path": "/var/log/aws_uc_feature/acm-cert-retriever.log",
             "log_group_name": "$${cwa_bootstrap_loggrp_name}",
             "log_stream_name": "{instance_id}-acm-cert-retriever.log",
             "timezone": "UTC"
           },
           {
-            "file_path": "/var/log/aws-uc-feature-infrastructure/emr-setup.log",
+            "file_path": "/var/log/aws_uc_feature/emr-setup.log",
             "log_group_name": "$${cwa_bootstrap_loggrp_name}",
             "log_stream_name": "{instance_id}-emr-setup.log",
             "timezone": "UTC"
           },
           {
-            "file_path": "/var/log/aws-uc-feature-infrastructure/download_scripts.log",
+            "file_path": "/var/log/aws_uc_feature/download_scripts.log",
             "log_group_name": "$${cwa_bootstrap_loggrp_name}",
             "log_stream_name": "{instance_id}-download-scripts.log",
             "timezone": "UTC"
           },
+          {
+            "file_path": "/var/log/aws_uc_feature/create_uc_feature_dbs.log",
+            "log_group_name": "$${cwa_steps_loggrp_name}",
+            "log_stream_name": "{instance_id}-create-uc-feature-dbs.log",
+            "timezone": "UTC"
+          }
         ]
       }
     },

@@ -1,8 +1,8 @@
 jobs:
-  - name: aws-uc-feature-infrastructure-pr
+  - name: aws-uc-feature-pr
     plan:
       - in_parallel:
-        - get: aws-uc-feature-infrastructure-pr
+        - get: aws-uc-feature-pr
           trigger: true
           version: every
         - get: emr-launcher-release
@@ -13,13 +13,13 @@ jobs:
           trigger: false
         - get: al2-emr-ami
           trigger: true
-      - put: aws-uc-feature-infrastructure-pr
+      - put: aws-uc-feature-pr
         params:
-          path: aws-uc-feature-infrastructure-pr
+          path: aws-uc-feature-pr
           status: pending
       - task: linting-shell
         input_mapping:
-          aws-uc-feature-infrastructure: aws-uc-feature-infrastructure-pr
+          aws-uc-feature: aws-uc-feature-pr
         config:
           platform: linux
           image_resource:
@@ -37,12 +37,12 @@ jobs:
                 # Ignore SC2154 as it will fail all terraform vars that are passed to scripts
                 # Ignore SC1091 due to sourcing of files that aren't in the same path locally so shellcheck will fail, but these files are on the boxes
                 for i in $(cat shell-list); do shellcheck -e SC2154 -e SC1091 $i; done
-            dir: aws-uc-feature-infrastructure
+            dir: aws-uc-feature
           inputs:
-            - name: aws-uc-feature-infrastructure
+            - name: aws-uc-feature
       - .: (( inject meta.plan.terraform-bootstrap ))
         input_mapping:
-          aws-uc-feature-infrastructure: aws-uc-feature-infrastructure-pr
+          aws-uc-feature: aws-uc-feature-pr
       - task: terraform-plan
         config:
           platform: linux
@@ -58,7 +58,7 @@ jobs:
             TF_WORKSPACE: qa
           run:
             path: sh
-            dir: aws-uc-feature-infrastructure
+            dir: aws-uc-feature
             args:
               - -exc
               - |
@@ -73,20 +73,20 @@ jobs:
                 terraform workspace show
                 terraform plan
           inputs:
-            - name: aws-uc-feature-infrastructure
+            - name: aws-uc-feature
             - name: terraform-config
             - name: emr-launcher-release
             - name: al2-emr-ami
             - name: emr-relauncher-release
         input_mapping:
-          aws-uc-feature-infrastructure: aws-uc-feature-infrastructure-pr
+          aws-uc-feature: aws-uc-feature-pr
         on_failure:
-          put: aws-uc-feature-infrastructure-pr
+          put: aws-uc-feature-pr
           params:
-            path: aws-uc-feature-infrastructure-pr
+            path: aws-uc-feature-pr
             status: failure
         on_success:
-          put: aws-uc-feature-infrastructure-pr
+          put: aws-uc-feature-pr
           params:
-            path: aws-uc-feature-infrastructure-pr
+            path: aws-uc-feature-pr
             status: success

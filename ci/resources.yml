@@ -1,26 +1,26 @@
 resources:
-  - name: aws-uc-feature-infrastructure-pr
+  - name: aws-uc-feature-pr
     type: pull-request
     source:
-      repository: dwp/aws-uc-feature-infrastructure
+      repository: dwp/aws-uc-feature
       access_token: ((dataworks-secrets.concourse_github_pat))
     webhook_token: ((dataworks.concourse_github_webhook_token))
     check_every: 5m
 
-  - name: aws-uc-feature-infrastructure
+  - name: aws-uc-feature
     type: git
     source:
       branch: master
-      uri: https://github.com/dwp/aws-uc-feature-infrastructure.git
+      uri: https://github.com/dwp/aws-uc-feature.git
       access_token: ((dataworks-secrets.concourse_github_pat))
     webhook_token: ((dataworks.concourse_github_webhook_token))
     check_every: 5m
 
-  - name: aws-uc-feature-infrastructure-pipeline
+  - name: aws-uc-feature-pipeline
     type: git
     source:
       branch: master
-      uri: https://github.com/dwp/aws-uc-feature-infrastructure.git
+      uri: https://github.com/dwp/aws-uc-feature.git
       access_token: ((dataworks-secrets.concourse_github_pat))
       paths:
         - ci/*
@@ -64,19 +64,6 @@ resources:
         is-public: false
         state: available
         name: dw-al2-emr-ami-*
-        architecture: x86_64
-
-  - name: untested-al2-emr-ami
-    type: ami
-    check_every: 5m
-    source:
-      aws_role_arn: arn:aws:iam::((dataworks.aws_management_acc)):role/ci
-      region: ((dataworks.aws_region))
-      filters:
-        owner-id: ((dataworks.aws_management_acc))
-        is-public: false
-        state: available
-        name: untested-dw-al2-emr-ami-*
         architecture: x86_64
 
   - name: meta-development

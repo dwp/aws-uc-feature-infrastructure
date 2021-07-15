@@ -1,6 +1,6 @@
-resource "aws_cloudwatch_event_rule" "aws_uc_feature_infrastructure_failed" {
-  name          = "aws_uc_feature_infrastructure_failed"
-  description   = "Sends failed message to slack when aws_uc_feature_infrastructure cluster terminates with errors"
+resource "aws_cloudwatch_event_rule" "aws_uc_feature_failed" {
+  name          = "aws_uc_feature_failed"
+  description   = "Sends failed message to slack when aws_uc_feature cluster terminates with errors"
   event_pattern = <<EOF
 {
   "source": [
@@ -14,20 +14,20 @@ resource "aws_cloudwatch_event_rule" "aws_uc_feature_infrastructure_failed" {
       "TERMINATED_WITH_ERRORS"
     ],
     "name": [
-      "aws-uc-feature-infrastructure"
+      "aws-uc-feature"
     ]
   }
 }
 EOF
 
   tags = {
-    Name = "aws_uc_feature_infrastructure_failed"
+    Name = "aws_uc_feature_failed"
   }
 }
 
-resource "aws_cloudwatch_event_rule" "aws_uc_feature_infrastructure_terminated" {
-  name          = "aws_uc_feature_infrastructure_terminated"
-  description   = "Sends failed message to slack when aws_uc_feature_infrastructure cluster terminates by user request"
+resource "aws_cloudwatch_event_rule" "aws_uc_feature_terminated" {
+  name          = "aws_uc_feature_terminated"
+  description   = "Sends failed message to slack when aws_uc_feature cluster terminates by user request"
   event_pattern = <<EOF
 {
   "source": [
@@ -41,7 +41,7 @@ resource "aws_cloudwatch_event_rule" "aws_uc_feature_infrastructure_terminated" 
       "TERMINATED"
     ],
     "name": [
-      "aws-uc-feature-infrastructure"
+      "aws-uc-feature"
     ],
     "stateChangeReason": [
       "{\"code\":\"USER_REQUEST\",\"message\":\"User request\"}"
@@ -51,12 +51,12 @@ resource "aws_cloudwatch_event_rule" "aws_uc_feature_infrastructure_terminated" 
 EOF
 
   tags = {
-    Name = "aws_uc_feature_infrastructure_terminated"
+    Name = "aws_uc_feature_terminated"
   }
 }
 
-resource "aws_cloudwatch_event_rule" "aws_uc_feature_infrastructure_success" {
-  name          = "aws_uc_feature_infrastructure_success"
+resource "aws_cloudwatch_event_rule" "aws_uc_feature_success" {
+  name          = "aws_uc_feature_success"
   description   = "checks that all steps complete"
   event_pattern = <<EOF
 {
@@ -71,7 +71,7 @@ resource "aws_cloudwatch_event_rule" "aws_uc_feature_infrastructure_success" {
       "TERMINATED"
     ],
     "name": [
-      "aws-uc-feature-infrastructure"
+      "aws-uc-feature"
     ],
     "stateChangeReason": [
       "{\"code\":\"ALL_STEPS_COMPLETED\",\"message\":\"Steps completed\"}"
@@ -81,13 +81,13 @@ resource "aws_cloudwatch_event_rule" "aws_uc_feature_infrastructure_success" {
 EOF
 
   tags = {
-    Name = "aws_uc_feature_infrastructure_success"
+    Name = "aws_uc_feature_success"
   }
 }
 
-resource "aws_cloudwatch_event_rule" "aws_uc_feature_infrastructure_running" {
-  name          = "aws_uc_feature_infrastructure_running"
-  description   = "checks that aws_uc_feature_infrastructure is running"
+resource "aws_cloudwatch_event_rule" "aws_uc_feature_running" {
+  name          = "aws_uc_feature_running"
+  description   = "checks that aws_uc_feature is running"
   event_pattern = <<EOF
 {
   "source": [
@@ -101,20 +101,20 @@ resource "aws_cloudwatch_event_rule" "aws_uc_feature_infrastructure_running" {
       "RUNNING"
     ],
     "name": [
-      "aws-uc-feature-infrastructure"
+      "aws-uc-feature"
     ]
   }
 }
 EOF
 
   tags = {
-    Name = "aws_uc_feature_infrastructure_running"
+    Name = "aws_uc_feature_running"
   }
 }
 
-resource "aws_cloudwatch_metric_alarm" "aws_uc_feature_infrastructure_failed" {
-  count                     = local.aws_uc_feature_infrastructure_alerts[local.environment] == true ? 1 : 0
-  alarm_name                = "aws_uc_feature_infrastructure_failed"
+resource "aws_cloudwatch_metric_alarm" "aws_uc_feature_failed" {
+  count                     = local.aws_uc_feature_alerts[local.environment] == true ? 1 : 0
+  alarm_name                = "aws_uc_feature_failed"
   comparison_operator       = "GreaterThanOrEqualToThreshold"
   evaluation_periods        = "1"
   metric_name               = "TriggeredRules"
@@ -126,18 +126,18 @@ resource "aws_cloudwatch_metric_alarm" "aws_uc_feature_infrastructure_failed" {
   insufficient_data_actions = []
   alarm_actions             = [data.terraform_remote_state.security-tools.outputs.sns_topic_london_monitoring.arn]
   dimensions = {
-    RuleName = aws_cloudwatch_event_rule.aws_uc_feature_infrastructure_failed.name
+    RuleName = aws_cloudwatch_event_rule.aws_uc_feature_failed.name
   }
   tags = {
-    Name              = "aws_uc_feature_infrastructure_failed",
+    Name              = "aws_uc_feature_failed",
     notification_type = "Error",
     severity          = "Critical"
   }
 }
 
-resource "aws_cloudwatch_metric_alarm" "aws_uc_feature_infrastructure_terminated" {
-  count                     = local.aws_uc_feature_infrastructure_alerts[local.environment] == true ? 1 : 0
-  alarm_name                = "aws_uc_feature_infrastructure_terminated"
+resource "aws_cloudwatch_metric_alarm" "aws_uc_feature_terminated" {
+  count                     = local.aws_uc_feature_alerts[local.environment] == true ? 1 : 0
+  alarm_name                = "aws_uc_feature_terminated"
   comparison_operator       = "GreaterThanOrEqualToThreshold"
   evaluation_periods        = "1"
   metric_name               = "TriggeredRules"
@@ -149,18 +149,18 @@ resource "aws_cloudwatch_metric_alarm" "aws_uc_feature_infrastructure_terminated
   insufficient_data_actions = []
   alarm_actions             = [data.terraform_remote_state.security-tools.outputs.sns_topic_london_monitoring.arn]
   dimensions = {
-    RuleName = aws_cloudwatch_event_rule.aws_uc_feature_infrastructure_terminated.name
+    RuleName = aws_cloudwatch_event_rule.aws_uc_feature_terminated.name
   }
   tags = {
-    Name              = "aws_uc_feature_infrastructure_terminated",
+    Name              = "aws_uc_feature_terminated",
     notification_type = "Information",
     severity          = "High"
   }
 }
 
-resource "aws_cloudwatch_metric_alarm" "aws_uc_feature_infrastructure_success" {
-  count                     = local.aws_uc_feature_infrastructure_alerts[local.environment] == true ? 1 : 0
-  alarm_name                = "aws_uc_feature_infrastructure_success"
+resource "aws_cloudwatch_metric_alarm" "aws_uc_feature_success" {
+  count                     = local.aws_uc_feature_alerts[local.environment] == true ? 1 : 0
+  alarm_name                = "aws_uc_feature_success"
   comparison_operator       = "GreaterThanOrEqualToThreshold"
   evaluation_periods        = "1"
   metric_name               = "TriggeredRules"
@@ -168,22 +168,22 @@ resource "aws_cloudwatch_metric_alarm" "aws_uc_feature_infrastructure_success" {
   period                    = "60"
   statistic                 = "Sum"
   threshold                 = "1"
-  alarm_description         = "Monitoring aws_uc_feature_infrastructure completion"
+  alarm_description         = "Monitoring aws_uc_feature completion"
   insufficient_data_actions = []
   alarm_actions             = [data.terraform_remote_state.security-tools.outputs.sns_topic_london_monitoring.arn]
   dimensions = {
-    RuleName = aws_cloudwatch_event_rule.aws_uc_feature_infrastructure_success.name
+    RuleName = aws_cloudwatch_event_rule.aws_uc_feature_success.name
   }
   tags = {
-    Name              = "aws_uc_feature_infrastructure_success",
+    Name              = "aws_uc_feature_success",
     notification_type = "Information",
     severity          = "Critical"
   }
 }
 
-resource "aws_cloudwatch_metric_alarm" "aws_uc_feature_infrastructure_running" {
-  count                     = local.aws_uc_feature_infrastructure_alerts[local.environment] == true ? 1 : 0
-  alarm_name                = "aws_uc_feature_infrastructure_running"
+resource "aws_cloudwatch_metric_alarm" "aws_uc_feature_running" {
+  count                     = local.aws_uc_feature_alerts[local.environment] == true ? 1 : 0
+  alarm_name                = "aws_uc_feature_running"
   comparison_operator       = "GreaterThanOrEqualToThreshold"
   evaluation_periods        = "1"
   metric_name               = "TriggeredRules"
@@ -191,14 +191,14 @@ resource "aws_cloudwatch_metric_alarm" "aws_uc_feature_infrastructure_running" {
   period                    = "60"
   statistic                 = "Sum"
   threshold                 = "1"
-  alarm_description         = "Monitoring aws_uc_feature_infrastructure running"
+  alarm_description         = "Monitoring aws_uc_feature running"
   insufficient_data_actions = []
   alarm_actions             = [data.terraform_remote_state.security-tools.outputs.sns_topic_london_monitoring.arn]
   dimensions = {
-    RuleName = aws_cloudwatch_event_rule.aws_uc_feature_infrastructure_running.name
+    RuleName = aws_cloudwatch_event_rule.aws_uc_feature_running.name
   }
   tags = {
-    Name              = "aws_uc_feature_infrastructure_running",
+    Name              = "aws_uc_feature_running",
     notification_type = "Information",
     severity          = "Critical"
   }

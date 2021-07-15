@@ -10,7 +10,7 @@
     source /opt/emr/logging.sh
 
     function log_wrapper_message() {
-        log_aws_uc_feature_infrastructure_message "$${1}" "update_dynamo.sh" "$${PID}" "$${@:2}" "Running as: ,$USER"
+        log_aws_uc_feature_message "$${1}" "update_dynamo.sh" "$${PID}" "$${@:2}" "Running as: ,$USER"
     }
 
   log_wrapper_message "Start running update_dynamo.sh Shell"
@@ -40,7 +40,7 @@
   CORRELATION_ID=$(cat $CORRELATION_ID_FILE)
   SNAPSHOT_TYPE=$(cat $SNAPSHOT_TYPE_FILE)
   EXPORT_DATE=$(cat $EXPORT_DATE_FILE)
-  DATA_PRODUCT="aws_uc_feature_infrastructure"
+  DATA_PRODUCT="aws_uc_feature"
 
   if [[ -z "$EXPORT_DATE" ]]; then
     log_wrapper_message "Export date from file was empty, so defaulting to today's date"
@@ -167,4 +167,4 @@
   #kick off loop to process all step files
   check_step_dir
 
-) >> /var/log/aws_uc_feature_infrastructure/update_dynamo_sh.log 2>&1
+) >> /var/log/aws_uc_feature/update_dynamo_sh.log 2>&1

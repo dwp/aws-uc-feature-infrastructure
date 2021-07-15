@@ -1,16 +1,16 @@
-resource "aws_acm_certificate" "aws_uc_feature_infrastructure" {
+resource "aws_acm_certificate" "aws_uc_feature" {
   certificate_authority_arn = data.terraform_remote_state.aws_certificate_authority.outputs.root_ca.arn
-  domain_name               = "aws-uc-feature-infrastructure.${local.env_prefix[local.environment]}${local.dataworks_domain_name}"
+  domain_name               = "aws-uc-feature.${local.env_prefix[local.environment]}${local.dataworks_domain_name}"
 
   options {
     certificate_transparency_logging_preference = "ENABLED"
   }
   tags = {
-    Name = "aws_uc_feature_infrastructure"
+    Name = "aws_uc_feature"
   }
 }
 
-data "aws_iam_policy_document" "aws_uc_feature_infrastructure_acm" {
+data "aws_iam_policy_document" "aws_uc_feature_acm" {
   statement {
     effect = "Allow"
 
@@ -19,21 +19,21 @@ data "aws_iam_policy_document" "aws_uc_feature_infrastructure_acm" {
     ]
 
     resources = [
-      aws_acm_certificate.aws_uc_feature_infrastructure.arn
+      aws_acm_certificate.aws_uc_feature.arn
     ]
   }
 }
 
-resource "aws_iam_policy" "aws_uc_feature_infrastructure_acm" {
-  name        = "ACMExport-aws-uc-feature-infrastructure-Cert"
-  description = "Allow export of aws-uc-feature-infrastructure certificate"
-  policy      = data.aws_iam_policy_document.aws_uc_feature_infrastructure_acm.json
+resource "aws_iam_policy" "aws_uc_feature_acm" {
+  name        = "ACMExport-aws-uc-feature-Cert"
+  description = "Allow export of aws-uc-feature certificate"
+  policy      = data.aws_iam_policy_document.aws_uc_feature_acm.json
   tags = {
-    Name = "aws_uc_feature_infrastructure_acm"
+    Name = "aws_uc_feature_acm"
   }
 }
 
-data "aws_iam_policy_document" "aws_uc_feature_infrastructure_certificates" {
+data "aws_iam_policy_document" "aws_uc_feature_certificates" {
   statement {
     effect = "Allow"
 
@@ -49,12 +49,12 @@ data "aws_iam_policy_document" "aws_uc_feature_infrastructure_certificates" {
   }
 }
 
-resource "aws_iam_policy" "aws_uc_feature_infrastructure_certificates" {
-  name        = "aws_uc_feature_infrastructureGetCertificates"
-  description = "Allow read access to the Crown-specific subset of the aws_uc_feature_infrastructure"
-  policy      = data.aws_iam_policy_document.aws_uc_feature_infrastructure_certificates.json
+resource "aws_iam_policy" "aws_uc_feature_certificates" {
+  name        = "aws_uc_featureGetCertificates"
+  description = "Allow read access to the Crown-specific subset of the aws_uc_feature"
+  policy      = data.aws_iam_policy_document.aws_uc_feature_certificates.json
   tags = {
-    Name = "aws_uc_feature_infrastructure_certificates"
+    Name = "aws_uc_feature_certificates"
   }
 }
 
