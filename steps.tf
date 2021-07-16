@@ -17,12 +17,11 @@ resource "aws_s3_bucket_object" "mandatory_reconsideration" {
   key        = "component/aws_uc_feature/mandatory_reconsideration.sh"
   content = templatefile("${path.module}/steps/mandatory_reconsideration.sh",
     {
+      uc_feature_scripts_location = local.aws_uc_feature_scripts_location
+      published_bucket       = format("s3://%s", data.terraform_remote_state.common.outputs.published_bucket.id)
       target_db              = local.uc_feature_db
       serde                  = local.serde
       lazy_serde                  = local.lazy_serde
-      data_path              = local.data_path
-      published_bucket       = format("s3://%s", data.terraform_remote_state.common.outputs.published_bucket.id)
-      uc_feature_scripts_location = local.uc_feature_scripts_location
     }
   )
 }
