@@ -20,7 +20,7 @@
     log_wrapper_message "Downloading & install latest aws-uc-feature scripts"
 
     VERSION="${version}"
-    URL="s3://${s3_artefact_bucket_id}/aws-uc-feature/aws-uc_feature-$VERSION.zip"
+    URL="s3://${s3_artefact_bucket_id}/aws-uc-feature/aws-uc-feature-$VERSION.zip"
     "$(which aws)" s3 cp "$URL" "$DOWNLOAD_DIR"
 
     echo "aws-uc-feature VERSION: $VERSION"
@@ -39,7 +39,7 @@
     echo "START_UNZIPPING ......................"
     log_wrapper_message "start unzipping ......................."
 
-    unzip "$DOWNLOAD_DIR"/aws-uc-feature-"$VERSION".zip -d "$SCRIPT_DIR"  >> /var/log/aws-aws-uc-feature/download_unzip_sql.log 2>&1
+    unzip "$DOWNLOAD_DIR"/aws-uc-feature-"$VERSION".zip -d "$SCRIPT_DIR"  >> /var/log/aws_uc_feature/download_unzip_sql.log 2>&1
 
     echo "FINISHED UNZIPPING ......................"
     log_wrapper_message "finished unzipping ......................."

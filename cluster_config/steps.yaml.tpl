@@ -15,6 +15,9 @@ BootstrapActions:
 - Name: "metrics-setup"
   ScriptBootstrapAction:
     Path: "file:/var/ci/metrics-setup.sh"
+- Name: "download_sql"
+  ScriptBootstrapAction:
+    Path: "file:/var/ci/download_sql.sh"
 Steps:
 - Name: "create_uc_feature_dbs"
   HadoopJarStep:
