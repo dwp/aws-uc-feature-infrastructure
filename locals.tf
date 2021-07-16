@@ -74,11 +74,11 @@ locals {
   }
 
   aws_uc_feature_version = {
-    development = "0.0.3"
-    qa          = "0.0.3"
-    integration = "0.0.3"
-    preprod     = "0.0.3"
-    production  = "0.0.3"
+    development = "0.0.5"
+    qa          = "0.0.5"
+    integration = "0.0.5"
+    preprod     = "0.0.5"
+    production  = "0.0.5"
   }
 
   aws_uc_feature_alerts = {
@@ -93,6 +93,8 @@ locals {
 
   uc_feature_db               = "uc_feature"
   hive_metastore_location     = "data/uc_feature"
+  serde                   = "org.openx.data.jsonserde.JsonSerDe"
+  lazy_serde              = "org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe"
   aws_uc_feature_scripts_location = "/opt/emr/uc_feature_scripts"
 
   amazon_region_domain = "${data.aws_region.current.name}.amazonaws.com"
@@ -142,7 +144,7 @@ locals {
 
   s3_log_prefix = "emr/aws_uc_feature"
 
-  dynamodb_final_step = "qu_mandatory"
+  dynamodb_final_step = "mandatory_reconsideration"
 
   # These should be `false` unless we have agreed this data product is to use the capacity reservations so as not to interfere with existing data products running
   use_capacity_reservation = {

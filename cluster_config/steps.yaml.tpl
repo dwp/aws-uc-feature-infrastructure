@@ -25,5 +25,11 @@ Steps:
     - "file:/var/ci/create_uc_feature_dbs.sh"
     Jar: "s3://eu-west-2.elasticmapreduce/libs/script-runner/script-runner.jar"
   ActionOnFailure: "${action_on_failure}"
+- Name: "mandatory_reconsideration"
+  HadoopJarStep:
+    Args:
+    - "file:/var/ci/mandatory_reconsideration.sh"
+    Jar: "s3://eu-west-2.elasticmapreduce/libs/script-runner/script-runner.jar"
+  ActionOnFailure: "${action_on_failure}"
 
 
