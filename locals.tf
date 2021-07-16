@@ -74,11 +74,11 @@ locals {
   }
 
   aws_uc_feature_version = {
-    development = "0.0.1"
-    qa          = "0.0.1"
-    integration = "0.0.1"
-    preprod     = "0.0.1"
-    production  = "0.0.1"
+    development = "0.0.3"
+    qa          = "0.0.3"
+    integration = "0.0.3"
+    preprod     = "0.0.3"
+    production  = "0.0.3"
   }
 
   aws_uc_feature_alerts = {
@@ -93,7 +93,7 @@ locals {
 
   uc_feature_db               = "uc_feature"
   hive_metastore_location     = "data/uc_feature"
-  uc_feature_scripts_location = "/opt/emr/uc_feature_scripts"
+  aws_uc_feature_scripts_location = "/opt/emr/uc_feature_scripts"
 
   amazon_region_domain = "${data.aws_region.current.name}.amazonaws.com"
   endpoint_services    = ["dynamodb", "ec2", "ec2messages", "glue", "kms", "logs", "monitoring", ".s3", "s3", "secretsmanager", "ssm", "ssmmessages"]
@@ -299,4 +299,5 @@ locals {
     data_s3_prefix   = data.terraform_remote_state.aws_s3_object_tagger.outputs.uc_feature_object_tagger_data_classification.data_s3_prefix
     config_file      = data.terraform_remote_state.aws_s3_object_tagger.outputs.uc_feature_object_tagger_data_classification.config_file
   }
+
 }

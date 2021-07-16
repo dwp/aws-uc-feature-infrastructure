@@ -25,6 +25,24 @@ resource "aws_s3_bucket_object" "download_scripts_sh" {
   }
 }
 
+resource "aws_s3_bucket_object" "download_sql_sh" {
+  bucket = data.terraform_remote_state.common.outputs.config_bucket.id
+  key    = "component/aws_uc_feature/download_sql.sh"
+  content = templatefile("${path.module}/bootstrap_actions/download_sql.sh",
+    {
+      version                     = local.aws_uc_feature_version[local.environment]
+      s3_artefact_bucket_id       = data.terraform_remote_state.management_artefact.outputs.artefact_bucket.id
+      s3_config_bucket_id         = format("s3://%s", data.terraform_remote_state.common.outputs.config_bucket.id)
+      aws_uc_feature_log_level    = local.aws_uc_feature_log_level[local.environment]
+      environment_name            = local.environment
+      aws_uc_feature_scripts_location = local.aws_uc_feature_scripts_location
+    }
+  )
+  tags = {
+    Name = "download_sql_sh"
+  }
+}
+
 resource "aws_s3_bucket_object" "emr_setup_sh" {
   bucket = data.terraform_remote_state.common.outputs.config_bucket.id
   key    = "component/aws_uc_feature/emr-setup.sh"
