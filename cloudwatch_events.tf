@@ -49,7 +49,7 @@ data "aws_iam_policy_document" "cloudwatch_events_assume_role" {
 
 data "aws_iam_policy_document" "allow_batch_job_submission" {
   statement {
-    sid    = "AllowBatchJobSubmission"
+    sid    = "UcFeatureAllowBatchJobSubmission"
     effect = "Allow"
 
     actions = [
@@ -61,7 +61,7 @@ data "aws_iam_policy_document" "allow_batch_job_submission" {
 }
 
 resource "aws_iam_policy" "allow_batch_job_submission" {
-  name   = "AllowBatchJobSubmission"
+  name   = "UcFeatureAllowBatchJobSubmission"
   policy = data.aws_iam_policy_document.allow_batch_job_submission.json
 }
 

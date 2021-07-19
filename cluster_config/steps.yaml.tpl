@@ -15,11 +15,20 @@ BootstrapActions:
 - Name: "metrics-setup"
   ScriptBootstrapAction:
     Path: "file:/var/ci/metrics-setup.sh"
+- Name: "download_sql"
+  ScriptBootstrapAction:
+    Path: "file:/var/ci/download_sql.sh"
 Steps:
 - Name: "create_uc_feature_dbs"
   HadoopJarStep:
     Args:
     - "file:/var/ci/create_uc_feature_dbs.sh"
+    Jar: "s3://eu-west-2.elasticmapreduce/libs/script-runner/script-runner.jar"
+  ActionOnFailure: "${action_on_failure}"
+- Name: "build_uc_feature"
+  HadoopJarStep:
+    Args:
+    - "file:/var/ci/build_uc_feature.sh"
     Jar: "s3://eu-west-2.elasticmapreduce/libs/script-runner/script-runner.jar"
   ActionOnFailure: "${action_on_failure}"
 

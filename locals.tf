@@ -74,11 +74,11 @@ locals {
   }
 
   aws_uc_feature_version = {
-    development = "0.0.1"
-    qa          = "0.0.1"
-    integration = "0.0.1"
-    preprod     = "0.0.1"
-    production  = "0.0.1"
+    development = "0.0.5"
+    qa          = "0.0.5"
+    integration = "0.0.5"
+    preprod     = "0.0.5"
+    production  = "0.0.5"
   }
 
   aws_uc_feature_alerts = {
@@ -91,9 +91,11 @@ locals {
 
   data_pipeline_metadata = data.terraform_remote_state.internal_compute.outputs.data_pipeline_metadata_dynamo.name
 
-  uc_feature_db               = "uc_feature"
-  hive_metastore_location     = "data/uc_feature"
-  uc_feature_scripts_location = "/opt/emr/uc_feature_scripts"
+  uc_feature_db                   = "uc_feature"
+  hive_metastore_location         = "data/uc_feature"
+  serde                           = "org.openx.data.jsonserde.JsonSerDe"
+  lazy_serde                      = "org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe"
+  aws_uc_feature_scripts_location = "/opt/emr/uc_feature_scripts"
 
   amazon_region_domain = "${data.aws_region.current.name}.amazonaws.com"
   endpoint_services    = ["dynamodb", "ec2", "ec2messages", "glue", "kms", "logs", "monitoring", ".s3", "s3", "secretsmanager", "ssm", "ssmmessages"]
@@ -142,7 +144,7 @@ locals {
 
   s3_log_prefix = "emr/aws_uc_feature"
 
-  dynamodb_final_step = "TO CHANGE"
+  dynamodb_final_step = "build_uc_feature"
 
   # These should be `false` unless we have agreed this data product is to use the capacity reservations so as not to interfere with existing data products running
   use_capacity_reservation = {
@@ -299,4 +301,37 @@ locals {
     data_s3_prefix   = data.terraform_remote_state.aws_s3_object_tagger.outputs.uc_feature_object_tagger_data_classification.data_s3_prefix
     config_file      = data.terraform_remote_state.aws_s3_object_tagger.outputs.uc_feature_object_tagger_data_classification.config_file
   }
+
+  retry_max_attempts = {
+    development = "10"
+    qa          = "10"
+    integration = "10"
+    preprod     = "12"
+    production  = "12"
+  }
+
+  retry_attempt_delay_seconds = {
+    development = "5"
+    qa          = "5"
+    integration = "5"
+    preprod     = "5"
+    production  = "5"
+  }
+
+  retry_enabled = {
+    development = "true"
+    qa          = "true"
+    integration = "true"
+    preprod     = "true"
+    production  = "true"
+  }
+
+  aws_uc_feature_processes = {
+    development = "10"
+    qa          = "10"
+    integration = "10"
+    preprod     = "20"
+    production  = "20"
+  }
+
 }
