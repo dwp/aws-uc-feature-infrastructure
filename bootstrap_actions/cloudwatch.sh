@@ -70,6 +70,12 @@ cat > /opt/aws/amazon-cloudwatch-agent/etc/amazon-cloudwatch-agent.json <<CWAGEN
             "log_group_name": "$${cwa_steps_loggrp_name}",
             "log_stream_name": "{instance_id}-create-uc-feature-dbs.log",
             "timezone": "UTC"
+          },
+          {
+            "file_path": "/var/log/aws_uc_feature/build_uc_feature.log",
+            "log_group_name": "$${cwa_steps_loggrp_name}",
+            "log_stream_name": "{instance_id}-build-uc-feature.log",
+            "timezone": "UTC"
           }
         ]
       }
