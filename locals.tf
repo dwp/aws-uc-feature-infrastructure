@@ -91,10 +91,10 @@ locals {
 
   data_pipeline_metadata = data.terraform_remote_state.internal_compute.outputs.data_pipeline_metadata_dynamo.name
 
-  uc_feature_db               = "uc_feature"
-  hive_metastore_location     = "data/uc_feature"
-  serde                   = "org.openx.data.jsonserde.JsonSerDe"
-  lazy_serde              = "org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe"
+  uc_feature_db                   = "uc_feature"
+  hive_metastore_location         = "data/uc_feature"
+  serde                           = "org.openx.data.jsonserde.JsonSerDe"
+  lazy_serde                      = "org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe"
   aws_uc_feature_scripts_location = "/opt/emr/uc_feature_scripts"
 
   amazon_region_domain = "${data.aws_region.current.name}.amazonaws.com"
@@ -302,7 +302,7 @@ locals {
     config_file      = data.terraform_remote_state.aws_s3_object_tagger.outputs.uc_feature_object_tagger_data_classification.config_file
   }
 
-    retry_max_attempts = {
+  retry_max_attempts = {
     development = "10"
     qa          = "10"
     integration = "10"
@@ -324,6 +324,14 @@ locals {
     integration = "true"
     preprod     = "true"
     production  = "true"
+  }
+
+  aws_uc_feature_processes = {
+    development = "10"
+    qa          = "10"
+    integration = "10"
+    preprod     = "20"
+    production  = "20"
   }
 
 }

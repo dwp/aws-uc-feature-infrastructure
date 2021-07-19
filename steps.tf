@@ -18,10 +18,11 @@ resource "aws_s3_bucket_object" "build_uc_feature" {
   content = templatefile("${path.module}/steps/build_uc_feature.sh",
     {
       uc_feature_scripts_location = local.aws_uc_feature_scripts_location
-      published_bucket       = format("s3://%s", data.terraform_remote_state.common.outputs.published_bucket.id)
-      target_db              = local.uc_feature_db
-      serde                  = local.serde
-      lazy_serde             = local.lazy_serde
+      published_bucket            = format("s3://%s", data.terraform_remote_state.common.outputs.published_bucket.id)
+      target_db                   = local.uc_feature_db
+      serde                       = local.serde
+      lazy_serde                  = local.lazy_serde
+      processes                   = local.aws_uc_feature_processes
     }
   )
 }
