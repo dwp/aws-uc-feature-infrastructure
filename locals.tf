@@ -302,4 +302,28 @@ locals {
     config_file      = data.terraform_remote_state.aws_s3_object_tagger.outputs.uc_feature_object_tagger_data_classification.config_file
   }
 
+    retry_max_attempts = {
+    development = "10"
+    qa          = "10"
+    integration = "10"
+    preprod     = "12"
+    production  = "12"
+  }
+
+  retry_attempt_delay_seconds = {
+    development = "5"
+    qa          = "5"
+    integration = "5"
+    preprod     = "5"
+    production  = "5"
+  }
+
+  retry_enabled = {
+    development = "true"
+    qa          = "true"
+    integration = "true"
+    preprod     = "true"
+    production  = "true"
+  }
+
 }

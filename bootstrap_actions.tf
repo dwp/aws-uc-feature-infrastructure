@@ -99,6 +99,27 @@ resource "aws_s3_bucket_object" "logging_script" {
   }
 }
 
+resource "aws_s3_bucket_object" "retry_utility" {
+  bucket = data.terraform_remote_state.common.outputs.config_bucket.id
+  key    = "component/aws_uc_feature/retry.sh"
+  content = templatefile("${path.module}/bootstrap_actions/retry.sh",
+    {
+      retry_max_attempts          = local.retry_max_attempts[local.environment]
+      retry_attempt_delay_seconds = local.retry_attempt_delay_seconds[local.environment]
+      retry_enabled               = local.retry_enabled[local.environment]
+    }
+  )
+}
+
+resource "aws_s3_bucket_object" "retry_script" {
+  bucket = data.terraform_remote_state.common.outputs.config_bucket.id
+  key    = "component/aws_uc_feature/with_retry.sh"
+  content = templatefile("${path.module}/bootstrap_actions/with_retry.sh",
+    {
+    }
+  )
+}
+
 resource "aws_cloudwatch_log_group" "aws_uc_feature" {
   name              = local.cw_agent_log_group_name
   retention_in_days = 180
