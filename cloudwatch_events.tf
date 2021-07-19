@@ -30,7 +30,9 @@ resource "aws_cloudwatch_event_target" "pdm_success_with_errors_start_object_tag
 resource "aws_iam_role" "allow_batch_job_submission" {
   name               = "AllowUcFeatureBatchJobSubmission"
   assume_role_policy = data.aws_iam_policy_document.cloudwatch_events_assume_role.json
-  tags               = local.common_tags
+  tags = {
+    Name = "aws_uc_feature"
+  }
 }
 
 data "aws_iam_policy_document" "cloudwatch_events_assume_role" {
