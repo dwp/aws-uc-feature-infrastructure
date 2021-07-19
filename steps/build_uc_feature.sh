@@ -9,7 +9,7 @@ set -Eeuo pipefail
         log_aws_uc_feature_message "$${1}" "mandatory_reconsideration.sh" "Running as: $USER"
     }
 
-    UC_FEATURE_LOCATION="${uc_feature_scripts_location}" 
+    UC_FEATURE_LOCATION="${uc_feature_scripts_location}"
 
     chmod u+x "$UC_FEATURE_LOCATION"/mandatory_reconsideration/mandatory_reconsideration.sh
     chmod u+x "$UC_FEATURE_LOCATION"/mandatory_reconsideration/nationality.sh
@@ -25,24 +25,23 @@ set -Eeuo pipefail
     NATIONALITY_DIR="$UC_FEATURE_LOCATION"/nationality
     RETRY_SCRIPT=/var/ci/with_retry.sh
     PROCESSES="${processes}"
-    
+
 
     log_wrapper_message "Set the following. published_bucket: $PUBLISHED_BUCKET, target_db: $TARGET_DB, serde: $SERDE, lazy_serde: $LAZY_SERDE, sql_dir: $SQL_DIR, uc_feature_dir: $UC_FEATURE_LOCATION"
 
     log_wrapper_message "Starting build_uc_feature job"
 
-    declare -a SCRIPT_DIRS=( "$MANDATORY_DIR" "$NATIONALITY_DIR" ) 
+    declare -a SCRIPT_DIRS=( "$MANDATORY_DIR" "$NATIONALITY_DIR" )
 
     #shellcheck disable=SC2038
-# here we are finding SQL files and don't have any non-alphanumeric filenames
-if ! printf '%s\n' "${SCRIPT_DIRS[@]}" \
-    | xargs -n1 -P"$PROCESSES" "$RETRY_SCRIPT" hive \
-            --hivevar target_db="$TARGET_DB" \
-            --hivevar serde="$SERDE" \
-            --hivevar data_path="$S3_PREFIX" -f; then
-    echo build_uc_feature failed >&2
-    exit 1
-fi
+    # here we are finding SQL files and don't have any non-alphanumeric filenames
+    if ! printf '%s\n' "$${SCRIPT_DIRS[@]}" | xargs -n1 -P"$PROCESSES" "$RETRY_SCRIPT" hive \
+                --hivevar target_db="$TARGET_DB" \
+                --hivevar serde="$SERDE" \
+                --hivevar data_path="$S3_PREFIX" -f; then
+        echo build_uc_feature failed >&2
+        exit 1
+    fi
 
 
 
