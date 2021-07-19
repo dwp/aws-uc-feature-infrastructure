@@ -41,7 +41,7 @@ set -Eeuo pipefail
                 --hivevar SERDE="$SERDE" \
                 --hivevar LAZY_SERDE="$LAZY_SERDE" \
                 --hivevar PDM="$PDM" \
-                --hivevar S3_PREFIX="$S3_PREFIX" 
+                --hivevar S3_PREFIX="$S3_PREFIX" -f; then
         echo build_uc_feature failed >&2
         exit 1
     fi
