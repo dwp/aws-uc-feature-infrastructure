@@ -47,10 +47,6 @@ set -Eeuo pipefail
         exit 1
     fi
 
-
-
-    "$MANDATORY_DIR"/mandatory_reconsideration.sh "$TARGET_DB" "$S3_PREFIX" "$SERDE" "$LAZY_SERDE" "$MANDATORY_DIR"
-
     log_wrapper_message "Finished build_uc_feature job"
 
 ) >> /var/log/aws_uc_feature/build_uc_feature.log 2>&1
