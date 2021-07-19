@@ -25,6 +25,7 @@ set -Eeuo pipefail
     NATIONALITY_DIR="$UC_FEATURE_LOCATION"/nationality
     RETRY_SCRIPT=/var/ci/with_retry.sh
     PROCESSES="${processes}"
+    PDM="uc"
 
 
     log_wrapper_message "Set the following. published_bucket: $PUBLISHED_BUCKET, target_db: $TARGET_DB, serde: $SERDE, lazy_serde: $LAZY_SERDE, uc_feature_dir: $UC_FEATURE_LOCATION"
@@ -36,9 +37,11 @@ set -Eeuo pipefail
     #shellcheck disable=SC2038
     # here we are finding SQL files and don't have any non-alphanumeric filenames
     if ! printf '%s\n' "$${SCRIPT_DIRS[@]}" | xargs -n1 -P"$PROCESSES" "$RETRY_SCRIPT" hive \
-                --hivevar target_db="$TARGET_DB" \
-                --hivevar serde="$SERDE" \
-                --hivevar data_path="$S3_PREFIX" -f; then
+                --hivevar DB="$TARGET_DB" \
+                --hivevar SERDE="$SERDE" \
+                --hivevar LAZY_SERDE="$LAZY_SERDE" \
+                --hivevar PDM="$PDM" \
+                --hivevar S3_PREFIX="$S3_PREFIX" 
         echo build_uc_feature failed >&2
         exit 1
     fi
