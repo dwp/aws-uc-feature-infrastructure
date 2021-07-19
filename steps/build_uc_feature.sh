@@ -27,7 +27,7 @@ set -Eeuo pipefail
     PROCESSES="${processes}"
 
 
-    log_wrapper_message "Set the following. published_bucket: $PUBLISHED_BUCKET, target_db: $TARGET_DB, serde: $SERDE, lazy_serde: $LAZY_SERDE, sql_dir: $SQL_DIR, uc_feature_dir: $UC_FEATURE_LOCATION"
+    log_wrapper_message "Set the following. published_bucket: $PUBLISHED_BUCKET, target_db: $TARGET_DB, serde: $SERDE, lazy_serde: $LAZY_SERDE, uc_feature_dir: $UC_FEATURE_LOCATION"
 
     log_wrapper_message "Starting build_uc_feature job"
 
