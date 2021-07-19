@@ -144,7 +144,7 @@ locals {
 
   s3_log_prefix = "emr/aws_uc_feature"
 
-  dynamodb_final_step = "mandatory_reconsideration"
+  dynamodb_final_step = "build_uc_feature"
 
   # These should be `false` unless we have agreed this data product is to use the capacity reservations so as not to interfere with existing data products running
   use_capacity_reservation = {
