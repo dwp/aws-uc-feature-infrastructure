@@ -32,6 +32,7 @@ set -Eeuo pipefail
 
     log_wrapper_message "Starting build_uc_feature job"
 
+    #shellcheck disable=SC2034
     declare -a SCRIPT_DIRS=( "$MANDATORY_DIR" "$NATIONALITY_DIR" )
 
     #shellcheck disable=SC2038
