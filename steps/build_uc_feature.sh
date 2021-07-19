@@ -12,7 +12,7 @@ set -Eeuo pipefail
     UC_FEATURE_LOCATION="${uc_feature_scripts_location}"
 
     chmod u+x "$UC_FEATURE_LOCATION"/mandatory_reconsideration/mandatory_reconsideration.sh
-    chmod u+x "$UC_FEATURE_LOCATION"/mandatory_reconsideration/nationality.sh
+    chmod u+x "$UC_FEATURE_LOCATION"/nationality/nationality.sh
 
     S3_PREFIX_FILE=/opt/emr/s3_prefix.txt
     S3_PREFIX=$(cat $S3_PREFIX_FILE)
