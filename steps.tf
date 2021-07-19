@@ -22,7 +22,7 @@ resource "aws_s3_bucket_object" "build_uc_feature" {
       target_db                   = local.uc_feature_db
       serde                       = local.serde
       lazy_serde                  = local.lazy_serde
-      processes                   = local.aws_uc_feature_processes
+      processes                   = local.aws_uc_feature_processes[local.environment]
     }
   )
 }

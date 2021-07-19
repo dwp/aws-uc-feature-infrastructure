@@ -35,12 +35,12 @@ set -Eeuo pipefail
 
     #shellcheck disable=SC2038
 # here we are finding SQL files and don't have any non-alphanumeric filenames
-if ! find "$SCRIPT_DIRS" -name '*.sql' \
+if ! printf '%s\n' "${SCRIPT_DIRS[@]}" \
     | xargs -n1 -P"$PROCESSES" "$RETRY_SCRIPT" hive \
             --hivevar target_db="$TARGET_DB" \
             --hivevar serde="$SERDE" \
             --hivevar data_path="$S3_PREFIX" -f; then
-    echo build model stage failed >&2
+    echo build_uc_feature failed >&2
     exit 1
 fi
 
