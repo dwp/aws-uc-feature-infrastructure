@@ -18,6 +18,7 @@ set -Eeuo pipefail
     S3_PREFIX=$(cat $S3_PREFIX_FILE)
 
     PUBLISHED_BUCKET="${published_bucket}"
+    S3_PATH="$PUBLISHED_BUCKET"/"$S3_PREFIX"
     TARGET_DB=${target_db}
     SERDE="${serde}"
     LAZY_SERDE="${lazy_serde}"
@@ -42,7 +43,7 @@ set -Eeuo pipefail
                 --hivevar SERDE="$SERDE" \
                 --hivevar LAZY_SERDE="$LAZY_SERDE" \
                 --hivevar PDM="$PDM" \
-                --hivevar S3_PREFIX="$S3_PREFIX" -f; then
+                --hivevar S3_PREFIX="$S3_PATH" -f; then
         echo build_uc_feature failed >&2
         exit 1
     fi
