@@ -23,6 +23,7 @@ set -Eeuo pipefail
     SERDE="${serde}"
     MANDATORY_DIR="$UC_FEATURE_LOCATION"/mandatory_reconsideration/mandatory_reconsideration.sql
     NATIONALITY_DIR="$UC_FEATURE_LOCATION"/nationality/nationality.sql
+    COMMON_SQL="$UC_FEATURE_LOCATION"/common/common.sql
     RETRY_SCRIPT=/var/ci/with_retry.sh
     PROCESSES="${processes}"
     PDM="uc"
@@ -34,6 +35,10 @@ set -Eeuo pipefail
 
     #shellcheck disable=SC2034
     declare -a SCRIPT_DIRS=( "$MANDATORY_DIR" "$NATIONALITY_DIR" )
+
+    hive        --hivevar DB="$TARGET_DB" \
+                --hivevar SERDE="$SERDE" \
+                --hivevar S3_PREFIX="$S3_PATH" -f "$COMMON_SQL";
 
     #shellcheck disable=SC2038
     if ! printf '%s\n' "$${SCRIPT_DIRS[@]}" | xargs -n1 -P"$PROCESSES" "$RETRY_SCRIPT" hive \
