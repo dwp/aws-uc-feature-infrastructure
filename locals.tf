@@ -74,11 +74,11 @@ locals {
   }
 
   aws_uc_feature_version = {
-    development = "0.0.7"
-    qa          = "0.0.7"
-    integration = "0.0.7"
-    preprod     = "0.0.7"
-    production  = "0.0.7"
+    development = "0.0.8"
+    qa          = "0.0.8"
+    integration = "0.0.8"
+    preprod     = "0.0.8"
+    production  = "0.0.8"
   }
 
   aws_uc_feature_alerts = {
@@ -124,7 +124,7 @@ locals {
     development = true
     qa          = false
     integration = false
-    preprod     = true
+    preprod     = false
     production  = false
   }
 
@@ -132,7 +132,7 @@ locals {
     development = "CONTINUE"
     qa          = "TERMINATE_CLUSTER"
     integration = "TERMINATE_CLUSTER"
-    preprod     = "CONTINUE"
+    preprod     = "TERMINATE_CLUSTER"
     production  = "TERMINATE_CLUSTER"
   }
 
