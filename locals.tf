@@ -74,11 +74,11 @@ locals {
   }
 
   aws_uc_feature_version = {
-    development = "0.0.9"
-    qa          = "0.0.9"
-    integration = "0.0.9"
-    preprod     = "0.0.9"
-    production  = "0.0.9"
+    development = "0.0.10"
+    qa          = "0.0.10"
+    integration = "0.0.10"
+    preprod     = "0.0.10"
+    production  = "0.0.10"
   }
 
   aws_uc_feature_alerts = {
