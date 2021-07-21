@@ -28,7 +28,7 @@ set -Eeuo pipefail
     PDM="uc"
 
 
-    log_wrapper_message "Set the following. published_bucket: $PUBLISHED_BUCKET, target_db: $TARGET_DB, serde: $SERDE, lazy_serde: $LAZY_SERDE, uc_feature_dir: $UC_FEATURE_LOCATION"
+    log_wrapper_message "Set the following. published_bucket: $PUBLISHED_BUCKET, target_db: $TARGET_DB, serde: $SERDE, uc_feature_dir: $UC_FEATURE_LOCATION"
 
     log_wrapper_message "Starting build_uc_feature job"
 
