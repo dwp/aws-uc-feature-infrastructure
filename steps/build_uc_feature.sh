@@ -48,15 +48,15 @@ set -Eeuo pipefail
 #        exit 1
 #    fi
 
-    log_wrapper_message "running Nationality script"
+#    log_wrapper_message "running Nationality script"
+#
+#     hive       --hivevar DB="$TARGET_DB" \
+#                --hivevar SERDE="$SERDE" \
+#                --hivevar LAZY_SERDE="$LAZY_SERDE" \
+#                --hivevar PDM="$PDM" \
+#                --hivevar S3_PREFIX="$S3_PATH" -f "$NATIONALITY_DIR"
 
-     hive       --hivevar DB="$TARGET_DB" \
-                --hivevar SERDE="$SERDE" \
-                --hivevar LAZY_SERDE="$LAZY_SERDE" \
-                --hivevar PDM="$PDM" \
-                --hivevar S3_PREFIX="$S3_PATH" -f "$NATIONALITY_DIR"
-
-    log_wrapper_message "finished running Nationality"
+#    log_wrapper_message "finished running Nationality"
 
     log_wrapper_message "running Mandatory script"
 
@@ -66,8 +66,7 @@ set -Eeuo pipefail
                 --hivevar PDM="$PDM" \
                 --hivevar S3_PREFIX="$S3_PATH" -f "$MANDATORY_DIR"
 
-    log_wrapper_message "finished running Mandatory\
-"
+    log_wrapper_message "finished running Mandatory"
 
 
     log_wrapper_message "Finished build_uc_feature job"
