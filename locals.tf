@@ -94,7 +94,6 @@ locals {
   uc_feature_db                   = "uc_feature"
   hive_metastore_location         = "data/uc_feature"
   serde                           = "org.openx.data.jsonserde.JsonSerDe"
-  lazy_serde                      = "org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe"
   aws_uc_feature_scripts_location = "/opt/emr/uc_feature_scripts"
 
   amazon_region_domain = "${data.aws_region.current.name}.amazonaws.com"
