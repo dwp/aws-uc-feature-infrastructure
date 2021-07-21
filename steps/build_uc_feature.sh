@@ -38,15 +38,37 @@ set -Eeuo pipefail
 
     #shellcheck disable=SC2038
     # here we are finding SQL files and don't have any non-alphanumeric filenames
-    if ! printf '%s\n' "$${SCRIPT_DIRS[@]}" | xargs -n1 -P"$PROCESSES" "$RETRY_SCRIPT" hive \
-                --hivevar DB="$TARGET_DB" \
+#    if ! printf '%s\n' "$${SCRIPT_DIRS[@]}" | xargs -n1 -P"$PROCESSES" "$RETRY_SCRIPT" hive \
+#                --hivevar DB="$TARGET_DB" \
+#                --hivevar SERDE="$SERDE" \
+#                --hivevar LAZY_SERDE="$LAZY_SERDE" \
+#                --hivevar PDM="$PDM" \
+#                --hivevar S3_PREFIX="$S3_PATH" -f; then
+#        echo build_uc_feature failed >&2
+#        exit 1
+#    fi
+
+    log_wrapper_message "running Nationality script"
+
+     hive       --hivevar DB="$TARGET_DB" \
                 --hivevar SERDE="$SERDE" \
                 --hivevar LAZY_SERDE="$LAZY_SERDE" \
                 --hivevar PDM="$PDM" \
-                --hivevar S3_PREFIX="$S3_PATH" -f; then
-        echo build_uc_feature failed >&2
-        exit 1
-    fi
+                --hivevar S3_PREFIX="$S3_PATH" -f "$NATIONALITY_DIR"
+
+    log_wrapper_message "finished running Nationality"
+
+    log_wrapper_message "running Mandatory script"
+
+     hive       --hivevar DB="$TARGET_DB" \
+                --hivevar SERDE="$SERDE" \
+                --hivevar LAZY_SERDE="$LAZY_SERDE" \
+                --hivevar PDM="$PDM" \
+                --hivevar S3_PREFIX="$S3_PATH" -f "$MANDATORY_DIR"
+
+    log_wrapper_message "finished running Mandatory\
+"
+
 
     log_wrapper_message "Finished build_uc_feature job"
 
