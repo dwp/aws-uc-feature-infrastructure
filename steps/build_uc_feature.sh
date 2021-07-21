@@ -24,8 +24,8 @@ set -Eeuo pipefail
     LAZY_SERDE="${lazy_serde}"
     MANDATORY_DIR="$UC_FEATURE_LOCATION"/mandatory_reconsideration/mandatory_reconsideration.sql
     NATIONALITY_DIR="$UC_FEATURE_LOCATION"/nationality/nationality.sql
-    RETRY_SCRIPT=/var/ci/with_retry.sh
-    PROCESSES="${processes}"
+#    RETRY_SCRIPT=/var/ci/with_retry.sh
+#    PROCESSES="${processes}"
     PDM="uc"
 
 
