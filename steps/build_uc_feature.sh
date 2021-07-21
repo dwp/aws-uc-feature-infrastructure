@@ -21,7 +21,6 @@ set -Eeuo pipefail
     S3_PATH="$PUBLISHED_BUCKET"/"$S3_PREFIX"
     TARGET_DB=${target_db}
     SERDE="${serde}"
-    LAZY_SERDE="${lazy_serde}"
     MANDATORY_DIR="$UC_FEATURE_LOCATION"/mandatory_reconsideration/mandatory_reconsideration.sql
     NATIONALITY_DIR="$UC_FEATURE_LOCATION"/nationality/nationality.sql
     RETRY_SCRIPT=/var/ci/with_retry.sh
@@ -29,7 +28,7 @@ set -Eeuo pipefail
     PDM="uc"
 
 
-    log_wrapper_message "Set the following. published_bucket: $PUBLISHED_BUCKET, target_db: $TARGET_DB, serde: $SERDE, lazy_serde: $LAZY_SERDE, uc_feature_dir: $UC_FEATURE_LOCATION"
+    log_wrapper_message "Set the following. published_bucket: $PUBLISHED_BUCKET, target_db: $TARGET_DB, serde: $SERDE, uc_feature_dir: $UC_FEATURE_LOCATION"
 
     log_wrapper_message "Starting build_uc_feature job"
 
@@ -37,11 +36,9 @@ set -Eeuo pipefail
     declare -a SCRIPT_DIRS=( "$MANDATORY_DIR" "$NATIONALITY_DIR" )
 
     #shellcheck disable=SC2038
-    # here we are finding SQL files and don't have any non-alphanumeric filenames
     if ! printf '%s\n' "$${SCRIPT_DIRS[@]}" | xargs -n1 -P"$PROCESSES" "$RETRY_SCRIPT" hive \
                 --hivevar DB="$TARGET_DB" \
                 --hivevar SERDE="$SERDE" \
-                --hivevar LAZY_SERDE="$LAZY_SERDE" \
                 --hivevar PDM="$PDM" \
                 --hivevar S3_PREFIX="$S3_PATH" -f; then
         echo build_uc_feature failed >&2
