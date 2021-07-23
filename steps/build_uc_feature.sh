@@ -36,9 +36,9 @@ set -Eeuo pipefail
     #shellcheck disable=SC2034
     declare -a SCRIPT_DIRS=( "$MANDATORY_DIR" "$NATIONALITY_DIR" )
 
-    hive        --hivevar DB="$TARGET_DB" \
-                --hivevar SERDE="$SERDE" \
-                --hivevar S3_PREFIX="$S3_PATH" -f "$COMMON_SQL";
+    "$RETRY_SCRIPT" hive    --hivevar DB="$TARGET_DB" \
+                            --hivevar SERDE="$SERDE" \
+                            --hivevar S3_PREFIX="$S3_PATH" -f "$COMMON_SQL";
 
     #shellcheck disable=SC2038
     if ! printf '%s\n' "$${SCRIPT_DIRS[@]}" | xargs -n1 -P"$PROCESSES" "$RETRY_SCRIPT" hive \
