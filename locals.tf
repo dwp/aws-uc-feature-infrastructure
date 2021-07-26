@@ -123,8 +123,8 @@ locals {
     development = true
     qa          = false
     integration = false
-    preprod     = false
-    production  = true
+    preprod     = true
+    production  = false
   }
 
   step_fail_action = {
