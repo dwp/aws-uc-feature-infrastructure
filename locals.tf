@@ -294,13 +294,6 @@ locals {
     production  = "1099"
   }
 
-  data_classification = {
-    config_bucket_id = data.terraform_remote_state.common.outputs.config_bucket.id
-    config_prefix    = data.terraform_remote_state.aws_s3_object_tagger.outputs.uc_feature_object_tagger_data_classification.config_prefix
-    data_s3_prefix   = data.terraform_remote_state.aws_s3_object_tagger.outputs.uc_feature_object_tagger_data_classification.data_s3_prefix
-    config_file      = data.terraform_remote_state.aws_s3_object_tagger.outputs.uc_feature_object_tagger_data_classification.config_file
-  }
-
   retry_max_attempts = {
     development = "10"
     qa          = "10"
