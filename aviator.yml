@@ -6,6 +6,7 @@ spruce:
       - with_in: ci/
         regexp: ".*yml"
       - with_in: ci/jobs/
+      - with_in: ci/jobs/ami-test/
     to: aviator_pipeline.yml
 fly:
   name: aws-uc-feature-infrastructure
