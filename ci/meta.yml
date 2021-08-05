@@ -114,7 +114,7 @@ meta:
           AWS_DEFAULT_REGION: ((dataworks.aws_region))
           NUMBER_OF_TOPICS_TO_USE: "3"
           E2E_TEST_TIMEOUT: 7200
-          E2E_FEATURE_TAG_FILTER: "@clive"
+          E2E_FEATURE_TAG_FILTER: "@uc-feature"
           ASSUME_DURATION: 10800
         run:
           path: sh
