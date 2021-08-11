@@ -10,7 +10,7 @@ output "aws_uc_feature_emr_launcher_lambda" {
 
 output "private_dns" {
   value = {
-    mongo_latest_service_discovery_dns = aws_service_discovery_private_dns_namespace.aws_uc_feature_services
-    mongo_latest_service_discovery     = aws_service_discovery_service.aws_uc_feature_services
+    uc_feature_service_discovery_dns = aws_service_discovery_private_dns_namespace.aws_uc_feature_services
+    uc_feature_service_discovery     = aws_service_discovery_service.aws_uc_feature_services
   }
 }
