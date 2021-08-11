@@ -43,4 +43,4 @@ set -euo pipefail
     export MAVEN_OPTS="-DproxyHost=$PROXY_HOST -DproxyPort=$PROXY_PORT"
     $METRICS_FILEPATH/$MAVEN/bin/mvn -f $METRICS_FILEPATH/pom.xml dependency:copy-dependencies -DoutputDirectory="$METRICS_FILEPATH/dependencies"
 
-) >> /var/log/aws_uc_feature/metrics-setup.log 2>&1
+) >> /var/log/aws_uc_feature/metrics_setup.log 2>&1

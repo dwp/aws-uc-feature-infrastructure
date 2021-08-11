@@ -66,6 +66,30 @@ cat > /opt/aws/amazon-cloudwatch-agent/etc/amazon-cloudwatch-agent.json <<CWAGEN
             "timezone": "UTC"
           },
           {
+            "file_path": "/var/log/aws_uc_feature/download_sql.log",
+            "log_group_name": "$${cwa_bootstrap_loggrp_name}",
+            "log_stream_name": "{instance_id}-download-sql.log",
+            "timezone": "UTC"
+          },
+          {
+            "file_path": "/var/log/aws_uc_feature/metrics_setup.log",
+            "log_group_name": "$${cwa_bootstrap_loggrp_name}",
+            "log_stream_name": "{instance_id}-metrics-setup.log",
+            "timezone": "UTC"
+          },
+          {
+            "file_path": "/var/log/aws_uc_feature/status_metrics.log",
+            "log_group_name": "$${cwa_bootstrap_loggrp_name}",
+            "log_stream_name": "{instance_id}-status-metrics.log",
+            "timezone": "UTC"
+          },
+          {
+            "file_path": "/var/log/aws_uc_feature/update_dynamo.log",
+            "log_group_name": "$${cwa_bootstrap_loggrp_name}",
+            "log_stream_name": "{instance_id}-update-dynamo.log",
+            "timezone": "UTC"
+          },
+          {
             "file_path": "/var/log/aws_uc_feature/create_uc_feature_dbs.log",
             "log_group_name": "$${cwa_steps_loggrp_name}",
             "log_stream_name": "{instance_id}-create-uc-feature-dbs.log",
