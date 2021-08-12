@@ -25,3 +25,25 @@ resource "aws_s3_bucket_object" "build_uc_feature" {
     }
   )
 }
+
+resource "aws_s3_bucket_object" "flush_pushgateway" {
+  bucket     = data.terraform_remote_state.common.outputs.config_bucket.id
+  kms_key_id = data.terraform_remote_state.common.outputs.config_bucket_cmk.arn
+  key        = "component/aws_uc_feature/flush-pushgateway.sh"
+  content = templatefile("${path.module}/steps/flush-pushgateway.sh",
+    {
+      uc_feature_pushgateway_hostname = local.aws_uc_feature_pushgateway_hostname
+    }
+  )
+}
+
+resource "aws_s3_bucket_object" "courtesy_flush" {
+  bucket     = data.terraform_remote_state.common.outputs.config_bucket.id
+  kms_key_id = data.terraform_remote_state.common.outputs.config_bucket_cmk.arn
+  key        = "component/aws_uc_feature/courtesy-flush.sh"
+  content = templatefile("${path.module}/steps/courtesy-flush.sh",
+    {
+      uc_feature_pushgateway_hostname = local.aws_uc_feature_pushgateway_hostname
+    }
+  )
+}
