@@ -19,6 +19,11 @@ BootstrapActions:
   ScriptBootstrapAction:
     Path: "file:/var/ci/download_sql.sh"
 Steps:
+- Name: "courtesy-flush"
+  HadoopJarStep:
+    Args:
+    - "file:/var/ci/courtesy-flush.sh"
+    Jar: "s3://eu-west-2.elasticmapreduce/libs/script-runner/script-runner.jar"
 - Name: "create_uc_feature_dbs"
   HadoopJarStep:
     Args:
@@ -31,5 +36,9 @@ Steps:
     - "file:/var/ci/build_uc_feature.sh"
     Jar: "s3://eu-west-2.elasticmapreduce/libs/script-runner/script-runner.jar"
   ActionOnFailure: "${action_on_failure}"
-
-
+- Name: "flush-pushgateway"
+  HadoopJarStep:
+    Args:
+    - "file:/var/ci/flush-pushgateway.sh"
+    Jar: "s3://eu-west-2.elasticmapreduce/libs/script-runner/script-runner.jar"
+  ActionOnFailure: "CONTINUE"
