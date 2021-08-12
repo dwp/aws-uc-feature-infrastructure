@@ -16,7 +16,7 @@ EXPORT_DATE="$8"
     source /opt/emr/logging.sh
 
     function log_wrapper_message() {
-        log_adg_message "$${1}" "flush-pushgateway.sh" "Running as: ,$USER"
+        log_aws_uc_feature_message "$${1}" "flush-pushgateway.sh" "Running as: ,$USER"
     }
 
     log_wrapper_message "Flushing the Uc Feature pushgateway"
