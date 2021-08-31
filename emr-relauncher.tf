@@ -28,7 +28,7 @@ resource "aws_lambda_function" "aws_uc_feature_emr_relauncher" {
       SNS_TOPIC       = aws_sns_topic.aws_uc_feature_cw_trigger_sns.arn
       TABLE_NAME      = local.data_pipeline_metadata
       MAX_RETRY_COUNT = local.aws_uc_feature_max_retry_count[local.environment]
-      LOG_LEVEL       = "debug"
+      LOG_LEVEL       = local.aws_uc_feature_log_level[local.environment]
     }
   }
 
