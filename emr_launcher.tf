@@ -27,7 +27,7 @@ resource "aws_lambda_function" "uc_feature_emr_launcher" {
     variables = {
       EMR_LAUNCHER_CONFIG_S3_BUCKET = data.terraform_remote_state.common.outputs.config_bucket.id
       EMR_LAUNCHER_CONFIG_S3_FOLDER = "emr/aws_uc_feature"
-      EMR_LAUNCHER_LOG_LEVEL        = "debug"
+      EMR_LAUNCHER_LOG_LEVEL        = local.aws_uc_feature_log_level[local.environment]
     }
   }
 
