@@ -158,7 +158,7 @@ locals {
 
   emr_capacity_reservation_usage_strategy = local.use_capacity_reservation[local.environment] == true ? "use-capacity-reservations-first" : ""
 
-  emr_subnet_non_capacity_reserved_environments = "eu-west-2c"
+  emr_subnet_non_capacity_reserved_environments = data.terraform_remote_state.common.outputs.aws_ec2_non_capacity_reservation_region
 
   aws_uc_feature_pushgateway_hostname = "${aws_service_discovery_service.aws_uc_feature_services.name}.${aws_service_discovery_private_dns_namespace.aws_uc_feature_services.name}"
 
