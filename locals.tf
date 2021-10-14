@@ -120,7 +120,7 @@ locals {
   }
 
   keep_cluster_alive = {
-    development = true
+    development = false
     qa          = false
     integration = false
     preprod     = false
