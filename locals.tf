@@ -96,6 +96,13 @@ locals {
   serde                           = "org.openx.data.jsonserde.JsonSerDe"
   aws_uc_feature_scripts_location = "/opt/emr/uc_feature_scripts"
 
+  data_classification = {
+    config_bucket_id = data.terraform_remote_state.common.outputs.config_bucket["id"]
+    config_prefix    = data.terraform_remote_state.aws_s3_object_tagger.outputs.uc_feature_object_tagger_data_classification["config_prefix"]
+    data_s3_prefix   = data.terraform_remote_state.aws_s3_object_tagger.outputs.uc_feature_object_tagger_data_classification["data_s3_prefix"]
+    config_file      = data.terraform_remote_state.aws_s3_object_tagger.outputs.uc_feature_object_tagger_data_classification["config_file"]
+  }
+
   amazon_region_domain = "${data.aws_region.current.name}.amazonaws.com"
   endpoint_services    = ["dynamodb", "ec2", "ec2messages", "glue", "kms", "logs", "monitoring", ".s3", "s3", "secretsmanager", "ssm", "ssmmessages"]
   no_proxy             = "169.254.169.254,${local.aws_uc_feature_pushgateway_hostname},${join(",", formatlist("%s.%s", local.endpoint_services, local.amazon_region_domain))}"
@@ -120,7 +127,7 @@ locals {
   }
 
   keep_cluster_alive = {
-    development = true
+    development = false
     qa          = false
     integration = false
     preprod     = false
