@@ -9,7 +9,7 @@ resource "aws_cloudwatch_event_target" "aws_uc_feature_success_start_object_tagg
     job_name       = "aws-uc-feature-success-cloudwatch-event"
   }
 
-  input = "{\"Parameters\": {\"data-s3-prefix\": \"${local.data_classification.data_s3_prefix}\", \"csv-location\": \"s3://${local.data_classification.config_bucket_id}/${local.data_classification.config_prefix}/${local.data_classification.config_file}}\"}}"
+  input = "{\"Parameters\": {\"data-s3-prefix\": \"${local.data_classification.data_s3_prefix}\", \"csv-location\": \"s3://${local.data_classification.config_bucket_id}/${local.data_classification.config_prefix}/${local.data_classification.config_file}\"}}"
 }
 
 
@@ -24,7 +24,7 @@ resource "aws_cloudwatch_event_target" "pdm_success_with_errors_start_object_tag
     job_name       = "aws-uc-feature-success-with-errors-cloudwatch-event"
   }
 
-  input = "{\"Parameters\": {\"data-s3-prefix\": \"${local.data_classification.data_s3_prefix}\", \"csv-location\": \"s3://${local.data_classification.config_bucket_id}/${local.data_classification.config_prefix}/${local.data_classification.config_file}}\"}}"
+  input = "{\"Parameters\": {\"data-s3-prefix\": \"${local.data_classification.data_s3_prefix}\", \"csv-location\": \"s3://${local.data_classification.config_bucket_id}/${local.data_classification.config_prefix}/${local.data_classification.config_file}\"}}"
 }
 
 resource "aws_iam_role" "allow_batch_job_submission" {
