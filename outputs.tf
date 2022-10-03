@@ -13,4 +13,5 @@ output "private_dns" {
     uc_feature_service_discovery_dns = aws_service_discovery_private_dns_namespace.aws_uc_feature_services
     uc_feature_service_discovery     = aws_service_discovery_service.aws_uc_feature_services
   }
+  sensitive = true
 }
