@@ -29,7 +29,7 @@ Tags:
 - key: "Business-Project"
   Value: "${business_project_tag_value}"
 - Key: "DWX_Environment"
-  Value: "${DWX_environment_tag_value}"
+  Value: "${dwx_environment_tag_value}"
 - Key: "DWX_Application"
   Value: "${emr_cluster_name}"
 - Key: "for-use-with-amazon-emr-managed-policies"
