@@ -8,6 +8,16 @@ resource "aws_s3_bucket_object" "metadata_script" {
   }
 }
 
+resource "aws_s3_object" "config_hcs_script" {
+  bucket     = data.terraform_remote_state.common.outputs.config_bucket.id
+  key        = "component/aws_uc_feature/config_hcs.sh"
+  content    = file("${path.module}/bootstrap_actions/config_hcs.sh")
+  kms_key_id = data.terraform_remote_state.common.outputs.config_bucket_cmk.arn
+  tags = {
+    Name = "config_hcs_script"
+  }
+}
+
 resource "aws_s3_bucket_object" "download_scripts_sh" {
   bucket = data.terraform_remote_state.common.outputs.config_bucket.id
   key    = "component/aws_uc_feature/download_scripts.sh"
