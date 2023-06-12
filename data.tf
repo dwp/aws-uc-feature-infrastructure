@@ -59,3 +59,7 @@ resource "aws_iam_role_policy_attachment" "aws_uc_feature_write_data" {
   role       = aws_iam_role.aws_uc_feature.name
   policy_arn = aws_iam_policy.aws_uc_feature_write_data.arn
 }
+
+data "aws_ec2_managed_prefix_list" "list" {
+  name = "dwp-*-aws-cidrs-*"
+}
