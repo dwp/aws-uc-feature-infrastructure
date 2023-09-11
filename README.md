@@ -1,3 +1,6 @@
+# DO NOT USE THIS REPO - MIGRATED TO GITLAB
+
+
 # aws-uc-feature-infrastructure
 
 This repo contains the infrastructure required for the UC Feature data product.
